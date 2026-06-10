@@ -37,7 +37,8 @@
             padding: 15px;
             display: flex;
             justify-content: center;
-            gap: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -70,6 +71,13 @@
             box-shadow: 0 0 15px rgba(0, 119, 192, 0.4);
         }
 
+        .toggle-btn.active[data-team="warriors"] {
+            background-color: #FFC72C;
+            border-color: #FFC72C;
+            color: #1D428A;
+            box-shadow: 0 0 15px rgba(255, 199, 44, 0.5);
+        }
+
         /* Header Style */
         header {
             background-color: var(--primary-color);
@@ -90,6 +98,7 @@
             font-size: 3.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
+            transition: color var(--transition-speed);
         }
 
         header p {
@@ -137,6 +146,7 @@
             padding-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+            transition: color var(--transition-speed);
         }
 
         p {
@@ -149,12 +159,14 @@
             margin-bottom: 20px;
             padding-left: 15px;
             border-left: 4px solid var(--secondary-color);
+            transition: border-color var(--transition-speed);
         }
 
         .timeline-year {
             font-weight: bold;
             color: var(--primary-color);
             font-size: 1.1rem;
+            transition: color var(--transition-speed);
         }
 
         /* Tables styling */
@@ -174,6 +186,7 @@
             background-color: #f7fafc;
             color: var(--primary-color);
             font-weight: bold;
+            transition: color var(--transition-speed);
         }
 
         /* Player Spotlight Sidebar Card */
@@ -187,6 +200,7 @@
             position: sticky;
             top: 100px;
             height: fit-content;
+            transition: border-color var(--transition-speed);
         }
 
         .player-image-container {
@@ -212,6 +226,7 @@
             font-weight: 800;
             color: var(--primary-color);
             margin-bottom: 5px;
+            transition: color var(--transition-speed);
         }
 
         .player-title {
@@ -231,6 +246,7 @@
             font-size: 0.9rem;
             letter-spacing: 1.5px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: background var(--transition-speed), color var(--transition-speed);
         }
 
         /* Responsive UI alterations */
@@ -257,6 +273,7 @@
     <nav class="team-selector-bar">
         <button class="toggle-btn active" data-team="wizards" onclick="switchTeam('wizards')">Washington Wizards</button>
         <button class="toggle-btn" data-team="magic" onclick="switchTeam('magic')">Orlando Magic</button>
+        <button class="toggle-btn" data-team="warriors" onclick="switchTeam('warriors')">Golden State Warriors</button>
     </nav>
 
     <header id="team-header">
@@ -327,7 +344,7 @@
                     <div id="player-name" class="player-name">John Wall</div>
                     <div id="player-title" class="player-title">Point Guard | #2 Legend</div>
                     <p id="player-desc">A 5-time NBA All-Star, John Wall stands as the ultimate cornerstone of modern D.C. basketball, dominating through record-setting assists and unrivaled transition speed.</p>
-                    <div class="mvp-badge">Most Valuable Player</div>
+                    <div id="player-badge" class="mvp-badge">Most Valuable Player</div>
                 </div>
             </div>
         </aside>
@@ -336,7 +353,7 @@
     <script>
         const teamData = {
             wizards: {
-                colors: { primary: '#0E2240', secondary: '#E31837', bg: '#f4f6f9' },
+                colors: { primary: '#0E2240', secondary: '#E31837', bg: '#f4f6f9', badgeText: '#ffffff' },
                 title: "Washington Wizards",
                 subtitle: "NBA Team Profile & Historical Archives",
                 logo: "https://via.placeholder.com/120/0E2240/ffffff?text=WIZARDS+LOGO",
@@ -368,7 +385,7 @@
                 }
             },
             magic: {
-                colors: { primary: '#0077C0', secondary: '#000000', bg: '#f0f4f8' },
+                colors: { primary: '#0077C0', secondary: '#000000', bg: '#f0f4f8', badgeText: '#ffffff' },
                 title: "Orlando Magic",
                 subtitle: "NBA Team Profile & Historical Archives",
                 logo: "https://via.placeholder.com/120/0077C0/ffffff?text=MAGIC+LOGO",
@@ -398,6 +415,38 @@
                     desc: "An absolutely unstoppable force of nature, Shaq began his legendary journey in Orlando, instantly claiming Rookie of the Year and carrying the team onto the sport's biggest stage.",
                     img: "https://via.placeholder.com/220/0077C0/ffffff?text=Shaquille+ONeal"
                 }
+            },
+            warriors: {
+                colors: { primary: '#1D428A', secondary: '#FFC72C', bg: '#f5f7fa', badgeText: '#1D428A' },
+                title: "Golden State Warriors",
+                subtitle: "NBA Team Profile & Historical Archives",
+                logo: "https://via.placeholder.com/120/1D428A/ffffff?text=WARRIORS+LOGO",
+                desc1: "The Golden State Warriors are an American professional basketball team based in San Francisco, California. The Warriors compete in the National Basketball Association (NBA) as a member of the league's Western Conference Pacific Division. The team plays its home games at the state-of-the-art Chase Center in Mission Bay.",
+                desc2: "Founded in 1946 as the Philadelphia Warriors, the franchise won the inaugural league championship. After moving to California, the team captured global attention through iconic teams like 'Run TMC' before fundamentally modernizing basketball analytics, passing networks, and floor-spacing layouts to form a multi-title modern dynasty.",
+                facts: [
+                    ["Inaugural Season", "1946 (as Philadelphia Warriors)"],
+                    ["Home Arena", "Chase Center (San Francisco, CA)"],
+                    ["Championships", "7 (1947, 1956, 1975, 2015, 2017, 2018, 2022)"],
+                    ["Conference Titles", "7 (Western Conference Era)"],
+                    ["Division Titles", "12 (Pacific Division)"]
+                ],
+                timeline: [
+                    { year: "1959-1965 — The Wilt Chamberlain Era", text: "Wilt Chamberlain asserted unrivaled athletic dominance over the league, including his famous 100-point game in 1962, setting unbreakable franchise scoring and rebounding records." },
+                    { year: "1974-1975 — Rick Barry's Masterclass", text: "Underdog underdogs, the Rick Barry-led Warriors swept the Washington Bullets in the 1975 NBA Finals, defining one of the greatest upset runs in league history." },
+                    { year: "2014-Present — The Splash Brothers Dynasty", text: "Anchored by Stephen Curry, Klay Thompson, and Draymond Green, the Warriors pioneered the three-point revolution, recording a historic 73-9 season in 2016 and securing 4 modern NBA championships." }
+                ],
+                leaders: [
+                    ["Total Points", "Stephen Curry", "26,528 PTS"],
+                    ["Total Assists", "Stephen Curry", "6,743 AST"],
+                    ["Total Rebounds", "Nate Thurmond", "12,771 REB"],
+                    ["Total Blocks", "Adonal Foyle", "1,140 BLK"]
+                ],
+                player: {
+                    name: "Stephen Curry",
+                    title: "Point Guard | #30 Paradigm Shifter",
+                    desc: "Widely regarded as the greatest shooter to ever walk the planet, Steph's unanimous MVP impact completely rewrote modern basketball geometry and propelled the franchise to global super-stardom.",
+                    img: "https://via.placeholder.com/220/1D428A/ffffff?text=Stephen+Curry"
+                }
             }
         };
 
@@ -413,21 +462,25 @@
             document.documentElement.style.setProperty('--secondary-color', data.colors.secondary);
             document.documentElement.style.setProperty('--bg-color', data.colors.bg);
 
-            // 3. Update Text Content & Headers
+            // 3. Handle specific badge text contrast fixes
+            const badge = document.getElementById('player-badge');
+            badge.style.color = data.colors.badgeText;
+
+            // 4. Update Text Content & Headers
             document.getElementById('header-title').innerText = data.title;
             document.getElementById('header-subtitle').innerText = data.subtitle;
             document.getElementById('header-logo').src = data.logo;
             document.getElementById('desc-p1').innerText = data.desc1;
             document.getElementById('desc-p2').innerText = data.desc2;
 
-            // 4. Update Quick Facts Table
+            // 5. Update Quick Facts Table
             let factHTML = `<tr><th>Metric</th><th>Details</th></tr>`;
             data.facts.forEach(row => {
                 factHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td></tr>`;
             });
             document.getElementById('fact-table').innerHTML = factHTML;
 
-            // 5. Update Historical Timeline Items
+            // 6. Update Historical Timeline Items
             let timelineHTML = '';
             data.timeline.forEach(item => {
                 timelineHTML += `
@@ -438,14 +491,14 @@
             });
             document.getElementById('timeline-container').innerHTML = timelineHTML;
 
-            // 6. Update Franchise Records Leaders Table
+            // 7. Update Franchise Records Leaders Table
             let leaderHTML = `<tr><th>Stat Category</th><th>Player Name</th><th>Record Value</th></tr>`;
             data.leaders.forEach(row => {
                 leaderHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
             });
             document.getElementById('leader-table').innerHTML = leaderHTML;
 
-            // 7. Swap the Spotlight Card Information
+            // 8. Swap the Spotlight Card Information
             document.getElementById('player-name').innerText = data.player.name;
             document.getElementById('player-title').innerText = data.player.title;
             document.getElementById('player-desc').innerText = data.player.desc;
@@ -454,4 +507,4 @@
         }
     </script>
 </body>
-</html>
+</html>vin Hayes</td><td>15,5
