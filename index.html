@@ -13,7 +13,7 @@
             --bg-color: #f4f6f9;
             --card-bg: #ffffff;
             --text-color: #1a202c;
-            --transition-speed: 0.3s;
+            --transition-speed: 0.4s;
         }
 
         /* Reset and Layout */
@@ -78,6 +78,13 @@
             box-shadow: 0 0 15px rgba(255, 199, 44, 0.5);
         }
 
+        .toggle-btn.active[data-team="spurs"] {
+            background-color: #8A8D8F;
+            border-color: #8A8D8F;
+            color: #000000;
+            box-shadow: 0 0 15px rgba(138, 141, 143, 0.6);
+        }
+
         /* Header Style */
         header {
             background-color: var(--primary-color);
@@ -129,6 +136,18 @@
             gap: 35px;
         }
 
+        /* Dynamic Visual Transition Classes */
+        .page-content-wrapper {
+            opacity: 1;
+            transform: translateY(0);
+            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
+        }
+
+        .page-content-wrapper.fade-out {
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
         /* Content Blocks */
         .content-section {
             background: var(--card-bg);
@@ -154,7 +173,7 @@
             color: #4a5568;
         }
 
-        /* Timelines & Playlists styling */
+        /* Timelines styling */
         .timeline-item {
             margin-bottom: 20px;
             padding-left: 15px;
@@ -274,6 +293,7 @@
         <button class="toggle-btn active" data-team="wizards" onclick="switchTeam('wizards')">Washington Wizards</button>
         <button class="toggle-btn" data-team="magic" onclick="switchTeam('magic')">Orlando Magic</button>
         <button class="toggle-btn" data-team="warriors" onclick="switchTeam('warriors')">Golden State Warriors</button>
+        <button class="toggle-btn" data-team="spurs" onclick="switchTeam('spurs')">San Antonio Spurs</button>
     </nav>
 
     <header id="team-header">
@@ -284,7 +304,7 @@
         </div>
     </header>
 
-    <main>
+    <main class="page-content-wrapper" id="content-wrapper">
         <div class="main-content">
             
             <section class="content-section">
@@ -447,64 +467,106 @@
                     desc: "Widely regarded as the greatest shooter to ever walk the planet, Steph's unanimous MVP impact completely rewrote modern basketball geometry and propelled the franchise to global super-stardom.",
                     img: "https://via.placeholder.com/220/1D428A/ffffff?text=Stephen+Curry"
                 }
+            },
+            spurs: {
+                colors: { primary: '#000000', secondary: '#8A8D8F', bg: '#f1f3f5', badgeText: '#ffffff' },
+                title: "San Antonio Spurs",
+                subtitle: "NBA Team Profile & Historical Archives",
+                logo: "https://via.placeholder.com/120/000000/ffffff?text=SPURS+LOGO",
+                desc1: "The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. The Spurs compete in the National Basketball Association (NBA) as a member of the league's Western Conference Southwest Division. The team hosts home games at the Frost Bank Center.",
+                desc2: "Starting out as the Dallas Chaparrals in the ABA (1967), the franchise moved to San Antonio in 1973 and adopted the Spurs moniker. Celebrated for establishing one of the most consistent, unselfish culture frameworks in global professional sports under Gregg Popovich, the franchise stands as a gold standard of championship execution.",
+                facts: [
+                    ["Inaugural Season", "1967 (ABA) / 1976 (NBA Merger)"],
+                    ["Home Arena", "Frost Bank Center (San Antonio, TX)"],
+                    ["Championships", "5 (1999, 2003, 2005, 2007, 2014)"],
+                    ["Conference Titles", "6 (Western Conference)"],
+                    ["Division Titles", "22 (All-Time Division Titles)"]
+                ],
+                timeline: [
+                    { year: "1989-1997 — The Admiral Sails In", text: "David Robinson's arrival injected instantly elite standard basketball in San Antonio, securing an MVP trophy and regular season dominance through terrifying defensive shot-blocking grids." },
+                    { year: "1997-2016 — The Tim Duncan Era Dynasty", text: "Drafting Tim Duncan paired perfectly with Robinson, establishing the 'Twin Towers'. Duncan eventually marshaled international icons Tony Parker and Manu Ginobili to manufacture 5 NBA Championships." },
+                    { year: "2023-Present — The Alien Generation", text: "Winning the 2023 Draft Lottery, the Spurs selected French sensation Victor Wembanyama, instantly repositioning the franchise as the epicenter of future defensive and skill innovation." }
+                ],
+                leaders: [
+                    ["Total Points", "Tim Duncan", "26,496 PTS"],
+                    ["Total Assists", "Tony Parker", "6,829 AST"],
+                    ["Total Rebounds", "Tim Duncan", "15,091 REB"],
+                    ["Total Blocks", "Tim Duncan", "3,020 BLK"]
+                ],
+                player: {
+                    name: "Tim Duncan",
+                    title: "Power Forward | #21 The Fundamental",
+                    desc: "A 2-time NBA MVP and 3-time Finals MVP, Timmy guided the silver and black via quiet leadership, defensive mastery, and an unblockable bank shot off the glass.",
+                    img: "https://via.placeholder.com/220/8A8D8F/000000?text=Tim+Duncan"
+                }
             }
         };
 
         function switchTeam(teamKey) {
+            const wrapper = document.getElementById('content-wrapper');
             const data = teamData[teamKey];
             
-            // 1. Update Active Buttons
-            document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector(`.toggle-btn[data-team="${teamKey}"]`).classList.add('active');
+            // 1. Kickstart the slide/fade out visual transition
+            wrapper.classList.add('fade-out');
 
-            // 2. Adjust CSS Colors dynamically
-            document.documentElement.style.setProperty('--primary-color', data.colors.primary);
-            document.documentElement.style.setProperty('--secondary-color', data.colors.secondary);
-            document.documentElement.style.setProperty('--bg-color', data.colors.bg);
+            // 2. Wait for fade animation frame to swap data behind the scenes
+            setTimeout(() => {
+                // Update Active Navigation Buttons
+                document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
+                document.querySelector(`.toggle-btn[data-team="${teamKey}"]`).classList.add('active');
 
-            // 3. Handle specific badge text contrast fixes
-            const badge = document.getElementById('player-badge');
-            badge.style.color = data.colors.badgeText;
+                // Adjust Structural Color Tokens
+                document.documentElement.style.setProperty('--primary-color', data.colors.primary);
+                document.documentElement.style.setProperty('--secondary-color', data.colors.secondary);
+                document.documentElement.style.setProperty('--bg-color', data.colors.bg);
 
-            // 4. Update Text Content & Headers
-            document.getElementById('header-title').innerText = data.title;
-            document.getElementById('header-subtitle').innerText = data.subtitle;
-            document.getElementById('header-logo').src = data.logo;
-            document.getElementById('desc-p1').innerText = data.desc1;
-            document.getElementById('desc-p2').innerText = data.desc2;
+                // Contrast Fix for Badge Elements
+                const badge = document.getElementById('player-badge');
+                badge.style.color = data.colors.badgeText;
 
-            // 5. Update Quick Facts Table
-            let factHTML = `<tr><th>Metric</th><th>Details</th></tr>`;
-            data.facts.forEach(row => {
-                factHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td></tr>`;
-            });
-            document.getElementById('fact-table').innerHTML = factHTML;
+                // Inject Text Node Content Updates
+                document.getElementById('header-title').innerText = data.title;
+                document.getElementById('header-subtitle').innerText = data.subtitle;
+                document.getElementById('header-logo').src = data.logo;
+                document.getElementById('desc-p1').innerText = data.desc1;
+                document.getElementById('desc-p2').innerText = data.desc2;
 
-            // 6. Update Historical Timeline Items
-            let timelineHTML = '';
-            data.timeline.forEach(item => {
-                timelineHTML += `
-                    <div class="timeline-item">
-                        <div class="timeline-year">${item.year}</div>
-                        <p>${item.text}</p>
-                    </div>`;
-            });
-            document.getElementById('timeline-container').innerHTML = timelineHTML;
+                // Inject Quick Facts Element Row Builders
+                let factHTML = `<tr><th>Metric</th><th>Details</th></tr>`;
+                data.facts.forEach(row => {
+                    factHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td></tr>`;
+                });
+                document.getElementById('fact-table').innerHTML = factHTML;
 
-            // 7. Update Franchise Records Leaders Table
-            let leaderHTML = `<tr><th>Stat Category</th><th>Player Name</th><th>Record Value</th></tr>`;
-            data.leaders.forEach(row => {
-                leaderHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
-            });
-            document.getElementById('leader-table').innerHTML = leaderHTML;
+                // Inject Custom Timelines Loop
+                let timelineHTML = '';
+                data.timeline.forEach(item => {
+                    timelineHTML += `
+                        <div class="timeline-item">
+                            <div class="timeline-year">${item.year}</div>
+                            <p>${item.text}</p>
+                        </div>`;
+                });
+                document.getElementById('timeline-container').innerHTML = timelineHTML;
 
-            // 8. Swap the Spotlight Card Information
-            document.getElementById('player-name').innerText = data.player.name;
-            document.getElementById('player-title').innerText = data.player.title;
-            document.getElementById('player-desc').innerText = data.player.desc;
-            document.getElementById('player-img').src = data.player.img;
-            document.getElementById('player-img').alt = data.player.name;
+                // Inject Record Metrics Table Arrays
+                let leaderHTML = `<tr><th>Stat Category</th><th>Player Name</th><th>Record Value</th></tr>`;
+                data.leaders.forEach(row => {
+                    leaderHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
+                });
+                document.getElementById('leader-table').innerHTML = leaderHTML;
+
+                // Swap Card Profile Elements
+                document.getElementById('player-name').innerText = data.player.name;
+                document.getElementById('player-title').innerText = data.player.title;
+                document.getElementById('player-desc').innerText = data.player.desc;
+                document.getElementById('player-img').src = data.player.img;
+                document.getElementById('player-img').alt = data.player.name;
+
+                // 3. Remove class to execute smooth slide-up reveal
+                wrapper.classList.remove('fade-out');
+            }, 250); // Matches CSS transition speeds cleanly
         }
     </script>
 </body>
-</html>vin Hayes</td><td>15,5
+</html>
