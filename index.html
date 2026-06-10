@@ -5,221 +5,371 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Washington Wizards Fan Hub</title>
     <style>
-        /* Base Themes and CSS Variables */
+        /* Modern Design Tokens & Variables */
         :root {
-            --primary-color: #0E2240; /* Wizards Navy */
-            --secondary-color: #E31837; /* Wizards Red */
-            --accent-color: #C4CED4;
-            --bg-color: #f4f6f9;
-            --card-bg: #ffffff;
-            --text-color: #1a202c;
+            --wizards-navy: #0E2240;
+            --wizards-red: #E31837;
+            --wizards-silver: #C4CED4;
+            --dark-surface: #0a1322;
+            --card-bg: rgba(255, 255, 255, 0.98);
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --border-radius: 16px;
+            --glass-shadow: 0 8px 32px 0 rgba(14, 34, 64, 0.08);
+            --neon-glow: 0 0 20px rgba(223, 24, 55, 0.25);
         }
 
-        /* Reset and Layout */
+        /* Smooth Reset */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Cabinet Grotesk', 'Segoe UI', Inter, sans-serif;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
+            background-color: #f1f5f9;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(14, 34, 64, 0.03) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(227, 24, 55, 0.03) 0px, transparent 50%);
+            color: var(--text-main);
             line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* Header Style */
+        /* Premium Split-Hero Header */
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, #050d1a 0%, var(--wizards-navy) 100%);
             color: #ffffff;
-            padding: 60px 20px;
+            padding: 90px 20px;
             position: relative;
-            border-bottom: 6px solid var(--secondary-color);
+            overflow: hidden;
+            border-bottom: 6px solid var(--wizards-red);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        /* Subtle geometric lines in the background */
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(45deg, transparent 45%, rgba(227, 24, 55, 0.1) 50%, transparent 55%);
+            background-size: 30px 30px;
+            opacity: 0.4;
         }
 
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
             position: relative;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
-        header h1 {
-            font-size: 3.5rem;
+        .header-text h1 {
+            font-size: 4rem;
+            font-weight: 900;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: -1px;
+            line-height: 1;
+            background: linear-gradient(to right, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.85;
-            margin-top: 5px;
+        .header-text p {
+            font-size: 1.3rem;
+            color: var(--wizards-silver);
+            margin-top: 10px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
         }
 
         .team-logo {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            right: 20px;
-            width: 120px;
+            width: 140px;
             height: auto;
-            background: rgba(255,255,255,0.1);
-            padding: 10px;
-            border-radius: 8px;
+            background: rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(8px);
+            padding: 15px;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* Core Grid Layout with Load-in Animation */
+        .team-logo:hover {
+            transform: scale(1.08) rotate(3deg);
+        }
+
+        /* Layout Architecture */
         main {
             max-width: 1200px;
-            margin: 40px auto;
+            margin: -40px auto 60px; /* Pulls content up slightly over the header */
             padding: 0 20px;
             display: grid;
             grid-template-columns: 2.2fr 1fr;
-            gap: 35px;
-            
-            /* Initial page load transition effect */
-            animation: fadeInSlideUp 0.6s ease-out forwards;
+            gap: 40px;
+            position: relative;
+            z-index: 10;
+            animation: containerAppearing 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
         }
 
-        @keyframes fadeInSlideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes containerAppearing {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Content Blocks */
+        /* Styled Cards Container */
         .content-section {
             background: var(--card-bg);
-            padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            margin-bottom: 30px;
+            padding: 40px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--glass-shadow);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+            margin-bottom: 35px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .content-section:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(14, 34, 64, 0.05);
         }
 
         h2 {
-            color: var(--primary-color);
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            border-bottom: 3px solid #edf2f7;
-            padding-bottom: 8px;
+            color: var(--wizards-navy);
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.5px;
+        }
+
+        /* Visual indicator accent line beside titles */
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 6px;
+            height: 28px;
+            background-color: var(--wizards-red);
+            border-radius: 4px;
         }
 
         p {
-            margin-bottom: 15px;
-            color: #4a5568;
-        }
-
-        /* Timelines styling */
-        .timeline-item {
             margin-bottom: 20px;
-            padding-left: 15px;
-            border-left: 4px solid var(--secondary-color);
+            color: #475569;
+            font-size: 1.08rem;
+            line-height: 1.75;
         }
 
-        .timeline-year {
-            font-weight: bold;
-            color: var(--primary-color);
-            font-size: 1.1rem;
-        }
-
-        /* Tables styling */
+        /* Modernized Data Tables */
         .data-table {
             width: 100%;
-            border-collapse: collapse;
-            margin: 20px 0;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin: 25px 0 10px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
         }
 
         .data-table th, .data-table td {
-            padding: 14px;
+            padding: 16px 20px;
             text-align: left;
-            border-bottom: 1px solid #e2e8f0;
         }
 
         .data-table th {
-            background-color: #f7fafc;
-            color: var(--primary-color);
-            font-weight: bold;
+            background-color: #f8fafc;
+            color: var(--wizards-navy);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #e2e8f0;
         }
 
-        /* Player Spotlight Sidebar Card */
+        .data-table td {
+            background-color: #ffffff;
+            border-bottom: 1px solid #f1f5f9;
+            font-size: 1.05rem;
+        }
+
+        .data-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .data-table tr:hover td {
+            background-color: #fafbfc;
+        }
+
+        /* Advanced Timeline Block */
+        .timeline-container {
+            position: relative;
+            margin-top: 10px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            padding-bottom: 30px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 10px;
+        }
+
+        /* Floating timeline vertical indicator thread */
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 4px;
+            top: 8px;
+            bottom: 0;
+            width: 2px;
+            background-color: #e2e8f0;
+        }
+
+        .timeline-item:last-child::before {
+            display: none;
+        }
+
+        /* Timeline tracking node bulb */
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--wizards-red);
+            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(223, 24, 55, 0.2);
+        }
+
+        .timeline-year {
+            font-weight: 800;
+            color: var(--wizards-navy);
+            font-size: 1.2rem;
+            margin-bottom: 6px;
+        }
+
+        /* Signature Player Spotlight Sidebar Card */
         .player-card {
-            background: var(--card-bg);
-            border-radius: 12px;
-            box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+            background: #ffffff;
+            border-radius: var(--border-radius);
+            box-shadow: var(--glass-shadow);
             overflow: hidden;
             text-align: center;
-            border-top: 6px solid var(--secondary-color);
+            border: 1px solid rgba(226, 232, 240, 0.8);
             position: sticky;
             top: 40px;
             height: fit-content;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .player-card:hover {
+            box-shadow: var(--neon-glow), 0 20px 40px rgba(14, 34, 64, 0.08);
         }
 
         .player-image-container {
-            background-color: #111;
-            padding: 20px 0;
+            background: linear-gradient(180deg, var(--wizards-navy) 0%, #050d1a 100%);
+            padding: 40px 0;
+            position: relative;
+        }
+
+        /* Decorative court circle behind player image */
+        .player-image-container::before {
+            content: '';
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 240px; height: 240px;
+            border: 2px dashed rgba(255, 255, 255, 0.08);
+            border-radius: 50%;
         }
 
         .player-image {
-            width: 220px;
-            height: 220px;
+            width: 200px;
+            height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid white;
-            margin: 0 auto;
+            border: 4px solid var(--wizards-red);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+            position: relative;
+            z-index: 2;
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .player-card:hover .player-image {
+            transform: scale(1.05);
         }
 
         .player-details {
-            padding: 25px;
+            padding: 35px 30px;
         }
 
         .player-name {
-            font-size: 1.8rem;
-            font-weight: 800;
-            color: var(--primary-color);
-            margin-bottom: 5px;
+            font-size: 2.2rem;
+            font-weight: 900;
+            color: var(--wizards-navy);
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+            margin-bottom: 4px;
         }
 
         .player-title {
-            font-weight: 600;
-            color: #718096;
-            margin-bottom: 15px;
-        }
-
-        .mvp-badge {
-            display: inline-block;
-            background-color: var(--secondary-color);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 35px;
-            font-weight: bold;
+            font-weight: 700;
+            color: var(--wizards-red);
             text-transform: uppercase;
             font-size: 0.9rem;
-            letter-spacing: 1.5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            letter-spacing: 1px;
+            margin-bottom: 20px;
         }
 
-        /* Responsive UI alterations */
-        @media (max-width: 900px) {
+        .player-details p {
+            font-size: 1rem;
+            color: #64748b;
+            margin-bottom: 25px;
+        }
+
+        /* Neon Interactive MVP Badge Overlay */
+        .mvp-badge {
+            display: block;
+            background: linear-gradient(135deg, var(--wizards-red) 0%, #b91c1c 100%);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 1rem;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(227, 24, 55, 0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* Responsive UI Scaling */
+        @media (max-width: 950px) {
+            header {
+                padding: 60px 20px 80px;
+                text-align: center;
+            }
+            .header-container {
+                flex-direction: column;
+                gap: 30px;
+            }
+            .header-text h1 {
+                font-size: 2.8rem;
+            }
             main {
                 grid-template-columns: 1fr;
+                margin-top: -20px;
             }
             .player-card {
                 position: static;
-            }
-            .team-logo {
-                position: relative;
-                transform: none;
-                top: 0;
-                right: 0;
-                margin-top: 20px;
-                display: block;
             }
         }
     </style>
@@ -228,9 +378,11 @@
 
     <header>
         <div class="header-container">
-            <h1>Washington Wizards</h1>
-            <p>NBA Team Profile & Historical Archives</p>
-            <img src="https://via.placeholder.com/120/0E2240/ffffff?text=WIZARDS+LOGO" alt="Washington Wizards Logo" class="team-logo">
+            <div class="header-text">
+                <h1>Washington Wizards</h1>
+                <p>Franchise Hub & Legacy Record Book</p>
+            </div>
+            <img src="https://via.placeholder.com/140/0E2240/ffffff?text=WIZARDS+LOGO" alt="Washington Wizards Team Crest" class="team-logo">
         </div>
     </header>
 
@@ -248,8 +400,8 @@
                 <table class="data-table">
                     <thead>
                         <tr>
-                            <th>Metric</th>
-                            <th>Details</th>
+                            <th>Franchise Metric</th>
+                            <th>Historical Record Data</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -262,7 +414,7 @@
                             <td>Capital One Arena (Washington, D.C.)</td>
                         </tr>
                         <tr>
-                            <td><strong>Championships</strong></td>
+                            <td><strong>NBA Championships</strong></td>
                             <td>1 (1978)</td>
                         </tr>
                         <tr>
@@ -279,7 +431,7 @@
 
             <section class="content-section">
                 <h2>Historical Timelines & Eras</h2>
-                <div>
+                <div class="timeline-container">
                     <div class="timeline-item">
                         <div class="timeline-year">1977-1978 — The Championship Glory</div>
                         <p>Led by Hall of Famers Elvin Hayes and Wes Unseld, the team captured its first and only NBA Championship by defeating the Seattle SuperSonics in an epic 7-game series.</p>
@@ -334,12 +486,12 @@
         <aside>
             <div class="player-card">
                 <div class="player-image-container">
-                    <img src="https://via.placeholder.com/220/E31837/ffffff?text=John+Wall" alt="John Wall Player Image" class="player-image">
+                    <img src="https://via.placeholder.com/200/E31837/ffffff?text=John+Wall" alt="John Wall in Washington Jersey" class="player-image">
                 </div>
                 <div class="player-details">
                     <div class="player-name">John Wall</div>
                     <div class="player-title">Point Guard | #2 Legend</div>
-                    <p>A 5-time NBA All-Star, John Wall stands as the ultimate cornerstone of modern D.C. basketball, dominating through record-setting assists and unrivaled transition speed.</p>
+                    <p>A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed.</p>
                     <div class="mvp-badge">Most Valuable Player</div>
                 </div>
             </div>
