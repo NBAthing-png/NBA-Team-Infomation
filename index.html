@@ -3,11 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Team Information</title>
+    <title>Washington Wizards Fan Page</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Layout */
+        header {
+            background-color: #0E2240; /* Wizards Navy */
+            color: #ffffff;
+            padding: 40px 20px;
+            position: relative;
+            border-bottom: 5px solid #E31837; /* Wizards Red */
+        }
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        /* Top Right Logo Positioning */
+        .team-logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: auto;
+        }
+
+        /* Main Content Container */
+        main {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        /* Team Info Section */
+        .team-info {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .team-info h2 {
+            color: #0E2240;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 5px;
+        }
+        .stats-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .stats-table th, .stats-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .stats-table th {
+            background-color: #f8fafc;
+        }
+
+        /* Player Spotlight Card (John Wall) */
+        .player-card {
+            background: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            overflow: hidden;
+            text-align: center;
+            border-top: 5px solid #E31837;
+            height: fit-content;
+        }
+        .player-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .player-details {
+            padding: 20px;
+        }
+        .player-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #0E2240;
+            margin-bottom: 5px;
+        }
+        .mvp-badge {
+            display: inline-block;
+            background-color: #E31837;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-top: 10px;
+        }
+
+        /* Responsive Design for Smaller Screens */
+        @media (max-width: 768px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            .team-logo {
+                position: static;
+                display: block;
+                margin-top: 15px;
+                width: 60px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1 style="color: #002B5C;">Washington Wizards</h1>
-    <p>The Washington Wizards are an American professional basketball team based in Washington, D.C. <br>The Wizards compete in the National Basketball Association (NBA) as a member of the Southeast Division of the Eastern Conference. <br>The team plays its home games at Capital One Arena, in the Chinatown neighborhood of Washington, D.C. <br>an arena they share with the Washington Capitals of the National Hockey League (NHL) and the Georgetown University <br>men's basketball team. The team is owned by Ted Leonsis through Monumental Sports & Entertainment.</p>
- <img src="https://upload.wikimedia.org/wikipedia/en/0/02/Washington_Wizards_logo.svg" height="240" width="290" />
+
+    <header>
+        <div class="header-container">
+            <h1>Washington Wizards</h1>
+            <p>NBA Team Profile & Fan Hub</p>
+            <img src="https://via.placeholder.com/80" alt="Washington Wizards Logo" class="team-logo">
+        </div>
+    </header>
+
+    <main>
+        <section class="team-info">
+            <h2>Team Overview</h2>
+            <p>The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division.</p>
+            
+            <table class="stats-table">
+                <thead>
+                    <tr>
+                        <th>Detail</th>
+                        <th>Information</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Founded</strong></td>
+                        <td>1961 (as Chicago Packers)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Arena</strong></td>
+                        <td>Capital One Arena</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Championships</strong></td>
+                        <td>1 (1978)</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <aside class="player-card">
+            <img src="https://via.placeholder.com/300x400" alt="John Wall" class="player-image">
+            <div class="player-details">
+                <div class="player-name">John Wall</div>
+                <p>Point Guard | #2</p>
+                <div class="mvp-badge">Most Valuable Player</div>
+            </div>
+        </aside>
+    </main>
+
 </body>
 </html>
