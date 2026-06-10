@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Team Hub</title>
+    <title>Washington Wizards Fan Hub</title>
     <style>
         /* Base Themes and CSS Variables */
         :root {
-            --primary-color: #0E2240;
-            --secondary-color: #E31837;
+            --primary-color: #0E2240; /* Wizards Navy */
+            --secondary-color: #E31837; /* Wizards Red */
             --accent-color: #C4CED4;
             --bg-color: #f4f6f9;
             --card-bg: #ffffff;
             --text-color: #1a202c;
-            --transition-speed: 0.4s;
         }
 
         /* Reset and Layout */
@@ -28,61 +27,6 @@
             background-color: var(--bg-color);
             color: var(--text-color);
             line-height: 1.6;
-            transition: background var(--transition-speed);
-        }
-
-        /* Selector Navigation Bar */
-        .team-selector-bar {
-            background-color: #111;
-            padding: 15px;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 15px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-        }
-
-        .toggle-btn {
-            background: transparent;
-            border: 2px solid #444;
-            color: #aaa;
-            padding: 10px 25px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: all var(--transition-speed);
-        }
-
-        .toggle-btn.active[data-team="wizards"] {
-            background-color: #E31837;
-            border-color: #E31837;
-            color: white;
-            box-shadow: 0 0 15px rgba(227, 24, 55, 0.4);
-        }
-
-        .toggle-btn.active[data-team="magic"] {
-            background-color: #0077C0;
-            border-color: #0077C0;
-            color: white;
-            box-shadow: 0 0 15px rgba(0, 119, 192, 0.4);
-        }
-
-        .toggle-btn.active[data-team="warriors"] {
-            background-color: #FFC72C;
-            border-color: #FFC72C;
-            color: #1D428A;
-            box-shadow: 0 0 15px rgba(255, 199, 44, 0.5);
-        }
-
-        .toggle-btn.active[data-team="spurs"] {
-            background-color: #8A8D8F;
-            border-color: #8A8D8F;
-            color: #000000;
-            box-shadow: 0 0 15px rgba(138, 141, 143, 0.6);
         }
 
         /* Header Style */
@@ -92,7 +36,6 @@
             padding: 60px 20px;
             position: relative;
             border-bottom: 6px solid var(--secondary-color);
-            transition: background var(--transition-speed), border-color var(--transition-speed);
         }
 
         .header-container {
@@ -105,7 +48,6 @@
             font-size: 3.5rem;
             text-transform: uppercase;
             letter-spacing: 1px;
-            transition: color var(--transition-speed);
         }
 
         header p {
@@ -126,7 +68,7 @@
             border-radius: 8px;
         }
 
-        /* Core Grid Layout */
+        /* Core Grid Layout with Load-in Animation */
         main {
             max-width: 1200px;
             margin: 40px auto;
@@ -134,18 +76,20 @@
             display: grid;
             grid-template-columns: 2.2fr 1fr;
             gap: 35px;
+            
+            /* Initial page load transition effect */
+            animation: fadeInSlideUp 0.6s ease-out forwards;
         }
 
-        /* Dynamic Visual Transition Classes */
-        .page-content-wrapper {
-            opacity: 1;
-            transform: translateY(0);
-            transition: opacity 0.25s ease-out, transform 0.25s ease-out;
-        }
-
-        .page-content-wrapper.fade-out {
-            opacity: 0;
-            transform: translateY(15px);
+        @keyframes fadeInSlideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* Content Blocks */
@@ -165,7 +109,6 @@
             padding-bottom: 8px;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            transition: color var(--transition-speed);
         }
 
         p {
@@ -178,14 +121,12 @@
             margin-bottom: 20px;
             padding-left: 15px;
             border-left: 4px solid var(--secondary-color);
-            transition: border-color var(--transition-speed);
         }
 
         .timeline-year {
             font-weight: bold;
             color: var(--primary-color);
             font-size: 1.1rem;
-            transition: color var(--transition-speed);
         }
 
         /* Tables styling */
@@ -205,7 +146,6 @@
             background-color: #f7fafc;
             color: var(--primary-color);
             font-weight: bold;
-            transition: color var(--transition-speed);
         }
 
         /* Player Spotlight Sidebar Card */
@@ -217,9 +157,8 @@
             text-align: center;
             border-top: 6px solid var(--secondary-color);
             position: sticky;
-            top: 100px;
+            top: 40px;
             height: fit-content;
-            transition: border-color var(--transition-speed);
         }
 
         .player-image-container {
@@ -245,7 +184,6 @@
             font-weight: 800;
             color: var(--primary-color);
             margin-bottom: 5px;
-            transition: color var(--transition-speed);
         }
 
         .player-title {
@@ -265,7 +203,6 @@
             font-size: 0.9rem;
             letter-spacing: 1.5px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: background var(--transition-speed), color var(--transition-speed);
         }
 
         /* Responsive UI alterations */
@@ -289,45 +226,60 @@
 </head>
 <body>
 
-    <nav class="team-selector-bar">
-        <button class="toggle-btn active" data-team="wizards" onclick="switchTeam('wizards')">Washington Wizards</button>
-        <button class="toggle-btn" data-team="magic" onclick="switchTeam('magic')">Orlando Magic</button>
-        <button class="toggle-btn" data-team="warriors" onclick="switchTeam('warriors')">Golden State Warriors</button>
-        <button class="toggle-btn" data-team="spurs" onclick="switchTeam('spurs')">San Antonio Spurs</button>
-    </nav>
-
-    <header id="team-header">
+    <header>
         <div class="header-container">
-            <h1 id="header-title">Washington Wizards</h1>
-            <p id="header-subtitle">NBA Team Profile & Historical Archives</p>
-            <img id="header-logo" src="https://via.placeholder.com/120/0E2240/ffffff?text=WIZARDS+LOGO" alt="Team Logo" class="team-logo">
+            <h1>Washington Wizards</h1>
+            <p>NBA Team Profile & Historical Archives</p>
+            <img src="https://via.placeholder.com/120/0E2240/ffffff?text=WIZARDS+LOGO" alt="Washington Wizards Logo" class="team-logo">
         </div>
     </header>
 
-    <main class="page-content-wrapper" id="content-wrapper">
+    <main>
         <div class="main-content">
             
             <section class="content-section">
                 <h2>Franchise Identity & Overview</h2>
-                <p id="desc-p1">The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games in the Capital One Arena, located in the Chinatown neighborhood of Washington, D.C.</p>
-                <p id="desc-p2">Established in 1961 as the Chicago Packers, the franchise underwent several name changes and relocations—becoming the Zephyrs, moving to Baltimore to become the Bullets, and eventually heading to the capital region. Renamed the Wizards in 1997 to project a fresh modern aesthetic, the franchise has a rich tapestry of historic draft selections, superstar runs, and passionate fan cultures.</p>
+                <p>The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games in the Capital One Arena, located in the Chinatown neighborhood of Washington, D.C.</p>
+                <p>Established in 1961 as the Chicago Packers, the franchise underwent several name changes and relocations—becoming the Zephyrs, moving to Baltimore to become the Bullets, and eventually heading to the capital region. Renamed the Wizards in 1997 to project a fresh modern aesthetic, the franchise has a rich tapestry of historic draft selections, superstar runs, and passionate fan cultures.</p>
             </section>
 
             <section class="content-section">
                 <h2>Quick Fact Sheet</h2>
-                <table class="data-table" id="fact-table">
-                    <tr><th>Metric</th><th>Details</th></tr>
-                    <tr><td><strong>Inaugural Season</strong></td><td>1961 (as Chicago Packers)</td></tr>
-                    <tr><td><strong>Home Arena</strong></td><td>Capital One Arena (Washington, D.C.)</td></tr>
-                    <tr><td><strong>Championships</strong></td><td>1 (1978)</td></tr>
-                    <tr><td><strong>Conference Titles</strong></td><td>4 (1971, 1975, 1978, 1979)</td></tr>
-                    <tr><td><strong>Division Titles</strong></td><td>8 (Last won in 2017)</td></tr>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Metric</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Inaugural Season</strong></td>
+                            <td>1961 (as Chicago Packers)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Home Arena</strong></td>
+                            <td>Capital One Arena (Washington, D.C.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Championships</strong></td>
+                            <td>1 (1978)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Conference Titles</strong></td>
+                            <td>4 (1971, 1975, 1978, 1979)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Division Titles</strong></td>
+                            <td>8 (Last won in 2017)</td>
+                        </tr>
+                    </tbody>
                 </table>
             </section>
 
             <section class="content-section">
                 <h2>Historical Timelines & Eras</h2>
-                <div id="timeline-container">
+                <div>
                     <div class="timeline-item">
                         <div class="timeline-year">1977-1978 — The Championship Glory</div>
                         <p>Led by Hall of Famers Elvin Hayes and Wes Unseld, the team captured its first and only NBA Championship by defeating the Seattle SuperSonics in an epic 7-game series.</p>
@@ -345,228 +297,54 @@
 
             <section class="content-section">
                 <h2>All-Time Franchise Leaders</h2>
-                <table class="data-table" id="leader-table">
-                    <tr><th>Stat Category</th><th>Player Name</th><th>Record Value</th></tr>
-                    <tr><td><strong>Total Points</strong></td><td>Elvin Hayes</td><td>15,551 PTS</td></tr>
-                    <tr><td><strong>Total Assists</strong></td><td>John Wall</td><td>5,282 AST</td></tr>
-                    <tr><td><strong>Total Rebounds</strong></td><td>Wes Unseld</td><td>13,769 REB</td></tr>
-                    <tr><td><strong>Total Blocks</strong></td><td>Elvin Hayes</td><td>1,558 BLK</td></tr>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Stat Category</th>
+                            <th>Player Name</th>
+                            <th>Record Value</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Total Points</strong></td>
+                            <td>Elvin Hayes</td>
+                            <td>15,551 PTS</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Assists</strong></td>
+                            <td>John Wall</td>
+                            <td>5,282 AST</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Rebounds</strong></td>
+                            <td>Wes Unseld</td>
+                            <td>13,769 REB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Total Blocks</strong></td>
+                            <td>Elvin Hayes</td>
+                            <td>1,558 BLK</td>
+                        </tr>
+                    </tbody>
                 </table>
             </section>
         </div>
 
         <aside>
-            <div class="player-card" id="spotlight-card">
+            <div class="player-card">
                 <div class="player-image-container">
-                    <img id="player-img" src="https://via.placeholder.com/220/E31837/ffffff?text=John+Wall" alt="John Wall Player Image" class="player-image">
+                    <img src="https://via.placeholder.com/220/E31837/ffffff?text=John+Wall" alt="John Wall Player Image" class="player-image">
                 </div>
                 <div class="player-details">
-                    <div id="player-name" class="player-name">John Wall</div>
-                    <div id="player-title" class="player-title">Point Guard | #2 Legend</div>
-                    <p id="player-desc">A 5-time NBA All-Star, John Wall stands as the ultimate cornerstone of modern D.C. basketball, dominating through record-setting assists and unrivaled transition speed.</p>
-                    <div id="player-badge" class="mvp-badge">Most Valuable Player</div>
+                    <div class="player-name">John Wall</div>
+                    <div class="player-title">Point Guard | #2 Legend</div>
+                    <p>A 5-time NBA All-Star, John Wall stands as the ultimate cornerstone of modern D.C. basketball, dominating through record-setting assists and unrivaled transition speed.</p>
+                    <div class="mvp-badge">Most Valuable Player</div>
                 </div>
             </div>
         </aside>
     </main>
 
-    <script>
-        const teamData = {
-            wizards: {
-                colors: { primary: '#0E2240', secondary: '#E31837', bg: '#f4f6f9', badgeText: '#ffffff' },
-                title: "Washington Wizards",
-                subtitle: "NBA Team Profile & Historical Archives",
-                logo: "https://via.placeholder.com/120/0E2240/ffffff?text=WIZARDS+LOGO",
-                desc1: "The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games in the Capital One Arena, located in the Chinatown neighborhood of Washington, D.C.",
-                desc2: "Established in 1961 as the Chicago Packers, the franchise underwent several name changes and relocations—becoming the Zephyrs, moving to Baltimore to become the Bullets, and eventually heading to the capital region. Renamed the Wizards in 1997 to project a fresh modern aesthetic, the franchise has a rich tapestry of historic draft selections, superstar runs, and passionate fan cultures.",
-                facts: [
-                    ["Inaugural Season", "1961 (as Chicago Packers)"],
-                    ["Home Arena", "Capital One Arena (Washington, D.C.)"],
-                    ["Championships", "1 (1978)"],
-                    ["Conference Titles", "4 (1971, 1975, 1978, 1979)"],
-                    ["Division Titles", "8 (Last won in 2017)"]
-                ],
-                timeline: [
-                    { year: "1977-1978 — The Championship Glory", text: "Led by Hall of Famers Elvin Hayes and Wes Unseld, the team captured its first and only NBA Championship by defeating the Seattle SuperSonics in an epic 7-game series." },
-                    { year: "2001-2003 — The Michael Jordan Era", text: "Basketball legend Michael Jordan came out of retirement for a historic final act, playing his last career seasons in Washington and selling out arenas worldwide." },
-                    { year: "2010-2019 — The John Wall Flash Era", text: "Drafted #1 overall in 2010, John Wall brought explosive speed and electric playmaking back to D.C., launching multiple deep Eastern Conference playoff iterations." }
-                ],
-                leaders: [
-                    ["Total Points", "Elvin Hayes", "15,551 PTS"],
-                    ["Total Assists", "John Wall", "5,282 AST"],
-                    ["Total Rebounds", "Wes Unseld", "13,769 REB"],
-                    ["Total Blocks", "Elvin Hayes", "1,558 BLK"]
-                ],
-                player: {
-                    name: "John Wall",
-                    title: "Point Guard | #2 Legend",
-                    desc: "A 5-time NBA All-Star, John Wall stands as the ultimate cornerstone of modern D.C. basketball, dominating through record-setting assists and unrivaled transition speed.",
-                    img: "https://via.placeholder.com/220/E31837/ffffff?text=John+Wall"
-                }
-            },
-            magic: {
-                colors: { primary: '#0077C0', secondary: '#000000', bg: '#f0f4f8', badgeText: '#ffffff' },
-                title: "Orlando Magic",
-                subtitle: "NBA Team Profile & Historical Archives",
-                logo: "https://via.placeholder.com/120/0077C0/ffffff?text=MAGIC+LOGO",
-                desc1: "The Orlando Magic are an American professional basketball team based in Orlando, Florida. The Magic compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team hosts home matchups at the Kia Center in downtown Orlando.",
-                desc2: "Founded in 1989 as a highly anticipated expansion franchise, the Magic quickly chose their name as an explicit homage to the world-renowned local attraction, Walt Disney World. Renowned for capturing lottery luck and developing generational dominant centers, the franchise has built a passionate global fan base.",
-                facts: [
-                    ["Inaugural Season", "1989 (Expansion Franchise)"],
-                    ["Home Arena", "Kia Center (Orlando, Florida)"],
-                    ["Championships", "0 (2-time Finalists)"],
-                    ["Conference Titles", "2 (1995, 2009)"],
-                    ["Division Titles", "8 (Last won in 2025)"]
-                ],
-                timeline: [
-                    { year: "1992-1996 — The Shaq & Penny Phenom", text: "Drafting Shaquille O'Neal (#1 overall) and pairing him with Penny Hardaway built a high-flying, pop-culture phenomenon that pushed the Magic to their first NBA Finals in 1995." },
-                    { year: "2000-2004 — The T-Mac Scoring Reign", text: "Tracy McGrady arrived and put on one of the most prolific individual offensive displays in league history, claiming consecutive NBA scoring titles in Orlando." },
-                    { year: "2008-2010 — The Dwight Howard Wall", text: "Under Stan Van Gundy, Defensive Player of the Year Dwight Howard anchored an innovative 4-out, 1-in system, engineering a breathtaking run to the 2009 NBA Finals." }
-                ],
-                leaders: [
-                    ["Total Points", "Dwight Howard", "11,435 PTS"],
-                    ["Total Assists", "Jameer Nelson", "3,501 AST"],
-                    ["Total Rebounds", "Dwight Howard", "8,072 REB"],
-                    ["Total Blocks", "Dwight Howard", "1,344 BLK"]
-                ],
-                player: {
-                    name: "Shaquille O'Neal",
-                    title: "Center | #32 Hall of Famer",
-                    desc: "An absolutely unstoppable force of nature, Shaq began his legendary journey in Orlando, instantly claiming Rookie of the Year and carrying the team onto the sport's biggest stage.",
-                    img: "https://via.placeholder.com/220/0077C0/ffffff?text=Shaquille+ONeal"
-                }
-            },
-            warriors: {
-                colors: { primary: '#1D428A', secondary: '#FFC72C', bg: '#f5f7fa', badgeText: '#1D428A' },
-                title: "Golden State Warriors",
-                subtitle: "NBA Team Profile & Historical Archives",
-                logo: "https://via.placeholder.com/120/1D428A/ffffff?text=WARRIORS+LOGO",
-                desc1: "The Golden State Warriors are an American professional basketball team based in San Francisco, California. The Warriors compete in the National Basketball Association (NBA) as a member of the league's Western Conference Pacific Division. The team plays its home games at the state-of-the-art Chase Center in Mission Bay.",
-                desc2: "Founded in 1946 as the Philadelphia Warriors, the franchise won the inaugural league championship. After moving to California, the team captured global attention through iconic teams like 'Run TMC' before fundamentally modernizing basketball analytics, passing networks, and floor-spacing layouts to form a multi-title modern dynasty.",
-                facts: [
-                    ["Inaugural Season", "1946 (as Philadelphia Warriors)"],
-                    ["Home Arena", "Chase Center (San Francisco, CA)"],
-                    ["Championships", "7 (1947, 1956, 1975, 2015, 2017, 2018, 2022)"],
-                    ["Conference Titles", "7 (Western Conference Era)"],
-                    ["Division Titles", "12 (Pacific Division)"]
-                ],
-                timeline: [
-                    { year: "1959-1965 — The Wilt Chamberlain Era", text: "Wilt Chamberlain asserted unrivaled athletic dominance over the league, including his famous 100-point game in 1962, setting unbreakable franchise scoring and rebounding records." },
-                    { year: "1974-1975 — Rick Barry's Masterclass", text: "Underdog underdogs, the Rick Barry-led Warriors swept the Washington Bullets in the 1975 NBA Finals, defining one of the greatest upset runs in league history." },
-                    { year: "2014-Present — The Splash Brothers Dynasty", text: "Anchored by Stephen Curry, Klay Thompson, and Draymond Green, the Warriors pioneered the three-point revolution, recording a historic 73-9 season in 2016 and securing 4 modern NBA championships." }
-                ],
-                leaders: [
-                    ["Total Points", "Stephen Curry", "26,528 PTS"],
-                    ["Total Assists", "Stephen Curry", "6,743 AST"],
-                    ["Total Rebounds", "Nate Thurmond", "12,771 REB"],
-                    ["Total Blocks", "Adonal Foyle", "1,140 BLK"]
-                ],
-                player: {
-                    name: "Stephen Curry",
-                    title: "Point Guard | #30 Paradigm Shifter",
-                    desc: "Widely regarded as the greatest shooter to ever walk the planet, Steph's unanimous MVP impact completely rewrote modern basketball geometry and propelled the franchise to global super-stardom.",
-                    img: "https://via.placeholder.com/220/1D428A/ffffff?text=Stephen+Curry"
-                }
-            },
-            spurs: {
-                colors: { primary: '#000000', secondary: '#8A8D8F', bg: '#f1f3f5', badgeText: '#ffffff' },
-                title: "San Antonio Spurs",
-                subtitle: "NBA Team Profile & Historical Archives",
-                logo: "https://via.placeholder.com/120/000000/ffffff?text=SPURS+LOGO",
-                desc1: "The San Antonio Spurs are an American professional basketball team based in San Antonio, Texas. The Spurs compete in the National Basketball Association (NBA) as a member of the league's Western Conference Southwest Division. The team hosts home games at the Frost Bank Center.",
-                desc2: "Starting out as the Dallas Chaparrals in the ABA (1967), the franchise moved to San Antonio in 1973 and adopted the Spurs moniker. Celebrated for establishing one of the most consistent, unselfish culture frameworks in global professional sports under Gregg Popovich, the franchise stands as a gold standard of championship execution.",
-                facts: [
-                    ["Inaugural Season", "1967 (ABA) / 1976 (NBA Merger)"],
-                    ["Home Arena", "Frost Bank Center (San Antonio, TX)"],
-                    ["Championships", "5 (1999, 2003, 2005, 2007, 2014)"],
-                    ["Conference Titles", "6 (Western Conference)"],
-                    ["Division Titles", "22 (All-Time Division Titles)"]
-                ],
-                timeline: [
-                    { year: "1989-1997 — The Admiral Sails In", text: "David Robinson's arrival injected instantly elite standard basketball in San Antonio, securing an MVP trophy and regular season dominance through terrifying defensive shot-blocking grids." },
-                    { year: "1997-2016 — The Tim Duncan Era Dynasty", text: "Drafting Tim Duncan paired perfectly with Robinson, establishing the 'Twin Towers'. Duncan eventually marshaled international icons Tony Parker and Manu Ginobili to manufacture 5 NBA Championships." },
-                    { year: "2023-Present — The Alien Generation", text: "Winning the 2023 Draft Lottery, the Spurs selected French sensation Victor Wembanyama, instantly repositioning the franchise as the epicenter of future defensive and skill innovation." }
-                ],
-                leaders: [
-                    ["Total Points", "Tim Duncan", "26,496 PTS"],
-                    ["Total Assists", "Tony Parker", "6,829 AST"],
-                    ["Total Rebounds", "Tim Duncan", "15,091 REB"],
-                    ["Total Blocks", "Tim Duncan", "3,020 BLK"]
-                ],
-                player: {
-                    name: "Tim Duncan",
-                    title: "Power Forward | #21 The Fundamental",
-                    desc: "A 2-time NBA MVP and 3-time Finals MVP, Timmy guided the silver and black via quiet leadership, defensive mastery, and an unblockable bank shot off the glass.",
-                    img: "https://via.placeholder.com/220/8A8D8F/000000?text=Tim+Duncan"
-                }
-            }
-        };
-
-        function switchTeam(teamKey) {
-            const wrapper = document.getElementById('content-wrapper');
-            const data = teamData[teamKey];
-            
-            // 1. Kickstart the slide/fade out visual transition
-            wrapper.classList.add('fade-out');
-
-            // 2. Wait for fade animation frame to swap data behind the scenes
-            setTimeout(() => {
-                // Update Active Navigation Buttons
-                document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
-                document.querySelector(`.toggle-btn[data-team="${teamKey}"]`).classList.add('active');
-
-                // Adjust Structural Color Tokens
-                document.documentElement.style.setProperty('--primary-color', data.colors.primary);
-                document.documentElement.style.setProperty('--secondary-color', data.colors.secondary);
-                document.documentElement.style.setProperty('--bg-color', data.colors.bg);
-
-                // Contrast Fix for Badge Elements
-                const badge = document.getElementById('player-badge');
-                badge.style.color = data.colors.badgeText;
-
-                // Inject Text Node Content Updates
-                document.getElementById('header-title').innerText = data.title;
-                document.getElementById('header-subtitle').innerText = data.subtitle;
-                document.getElementById('header-logo').src = data.logo;
-                document.getElementById('desc-p1').innerText = data.desc1;
-                document.getElementById('desc-p2').innerText = data.desc2;
-
-                // Inject Quick Facts Element Row Builders
-                let factHTML = `<tr><th>Metric</th><th>Details</th></tr>`;
-                data.facts.forEach(row => {
-                    factHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td></tr>`;
-                });
-                document.getElementById('fact-table').innerHTML = factHTML;
-
-                // Inject Custom Timelines Loop
-                let timelineHTML = '';
-                data.timeline.forEach(item => {
-                    timelineHTML += `
-                        <div class="timeline-item">
-                            <div class="timeline-year">${item.year}</div>
-                            <p>${item.text}</p>
-                        </div>`;
-                });
-                document.getElementById('timeline-container').innerHTML = timelineHTML;
-
-                // Inject Record Metrics Table Arrays
-                let leaderHTML = `<tr><th>Stat Category</th><th>Player Name</th><th>Record Value</th></tr>`;
-                data.leaders.forEach(row => {
-                    leaderHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
-                });
-                document.getElementById('leader-table').innerHTML = leaderHTML;
-
-                // Swap Card Profile Elements
-                document.getElementById('player-name').innerText = data.player.name;
-                document.getElementById('player-title').innerText = data.player.title;
-                document.getElementById('player-desc').innerText = data.player.desc;
-                document.getElementById('player-img').src = data.player.img;
-                document.getElementById('player-img').alt = data.player.name;
-
-                // 3. Remove class to execute smooth slide-up reveal
-                wrapper.classList.remove('fade-out');
-            }, 250); // Matches CSS transition speeds cleanly
-        }
-    </script>
 </body>
 </html>
