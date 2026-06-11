@@ -18,6 +18,11 @@
             --border-radius: 16px;
             --glass-shadow: 0 8px 32px 0 rgba(14, 34, 64, 0.08);
             --neon-glow: 0 0 20px rgba(223, 24, 55, 0.25);
+            
+            /* Toggle Specific Variables */
+            --toggle-bg: rgba(255, 255, 255, 0.08);
+            --toggle-indicator: #E31837;
+            --left-offset: 4px;
         }
 
         /* Pacers Theme Overrides */
@@ -27,6 +32,9 @@
             --accent-silver: #BEC0C2;
             --dark-surface: #001228;
             --neon-glow: 0 0 20px rgba(253, 187, 48, 0.35);
+            
+            --toggle-indicator: #FDBB30;
+            --left-offset: calc(50% + 4px);
         }
 
         /* Smooth Reset */
@@ -99,64 +107,60 @@
             transition: color 0.4s ease;
         }
 
-        /* Interactive Theme Toggle Switch */
-        .toggle-container {
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .switch {
+        /* Segmented Button Group Toggle */
+        .toggle-wrapper {
+            margin-top: 25px;
             position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
+            display: inline-flex;
+            background-color: var(--toggle-bg);
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 4px;
+            border-radius: 50px;
+            width: 280px;
+            height: 50px;
+            z-index: 5;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        .switch input { 
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
+        /* The sliding background indicator */
+        .toggle-wrapper::before {
+            content: '';
             position: absolute;
-            cursor: pointer;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #E31837; /* Wizards Red default */
-            transition: .4s;
-            border-radius: 34px;
-            border: 2px solid rgba(255,255,255,0.2);
+            top: 4px;
+            left: var(--left-offset);
+            width: calc(50% - 6px);
+            height: calc(100% - 8px);
+            background-color: var(--toggle-indicator);
+            border-radius: 40px;
+            transition: left 0.35s cubic-bezier(0.25, 1, 0.5, 1), background-color 0.35s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            z-index: 1;
         }
 
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 22px;
-            width: 22px;
-            left: 4px;
-            bottom: 4px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-        }
-
-        input:checked + .slider {
-            background-color: #FDBB30; /* Pacers Gold */
-        }
-
-        input:checked + .slider:before {
-            transform: translateX(26px);
-        }
-
-        .toggle-label {
-            font-size: 0.9rem;
+        .toggle-btn {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            font-weight: 800;
             text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-weight: 700;
+            letter-spacing: 1px;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            transition: color 0.3s ease;
+            border-radius: 40px;
+        }
+
+        /* Active Text Coloring dynamic rules */
+        .toggle-btn.active {
             color: #ffffff;
+        }
+        [data-theme="pacers"] .toggle-btn.active {
+            color: #002D62; /* Navy text on Gold background looks cleaner */
         }
 
         .team-logo {
@@ -447,8 +451,8 @@
             .header-text h1 {
                 font-size: 2.8rem;
             }
-            .toggle-container {
-                justify-content: center;
+            .toggle-wrapper {
+                margin: 20px auto 0;
             }
             main {
                 grid-template-columns: 1fr;
@@ -468,13 +472,9 @@
                 <h1 id="team-heading">Washington Wizards</h1>
                 <p>facts and stats</p>
                 
-                <div class="toggle-container">
-                    <span class="toggle-label">Wizards</span>
-                    <label class="switch">
-                        <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
-                        <span class="slider"></span>
-                    </label>
-                    <span class="toggle-label">Pacers</span>
+                <div class="toggle-wrapper">
+                    <button type="button" id="btn-wizards" class="toggle-btn active" onclick="setTeam('wizards')">Wizards</button>
+                    <button type="button" id="btn-pacers" class="toggle-btn" onclick="setTeam('pacers')">Pacers</button>
                 </div>
             </div>
             <img id="team-logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Washington_Wizards_logo.svg/1280px-Washington_Wizards_logo.svg.png" alt="Team Crest" class="team-logo">
@@ -660,17 +660,23 @@
             }
         };
 
-        function toggleTheme() {
-            const toggle = document.getElementById('theme-toggle');
-            const activeTeam = toggle.checked ? 'pacers' : 'wizards';
+        function setTeam(activeTeam) {
+            // 1. Manage Active states on the buttons
+            document.getElementById('btn-wizards').classList.remove('active');
+            document.getElementById('btn-pacers').classList.remove('active');
             
-            // 1. Swap CSS Root Attribute
-            document.documentElement.setAttribute('data-theme', toggle.checked ? 'pacers' : '');
+            if (activeTeam === 'wizards') {
+                document.getElementById('btn-wizards').classList.add('active');
+                document.documentElement.setAttribute('data-theme', '');
+            } else {
+                document.getElementById('btn-pacers').classList.add('active');
+                document.documentElement.setAttribute('data-theme', 'pacers');
+            }
 
-            // Get targeted payload
+            // Get targeted payload from local object
             const data = teamData[activeTeam];
 
-            // 2. Refresh Text Nodes
+            // 2. Refresh Main Header Elements
             document.getElementById('team-heading').textContent = data.name;
             document.getElementById('overview-p1').textContent = data.overview1;
             document.getElementById('overview-p2').textContent = data.overview2;
