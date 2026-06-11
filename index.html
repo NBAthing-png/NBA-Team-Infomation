@@ -3,13 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Washington Wizards Fan Hub</title>
+    <title>NBA Fan Hub</title>
     <style>
         /* Modern Design Tokens & Variables */
         :root {
-            --wizards-navy: #0E2240;
-            --wizards-red: #E31837;
-            --wizards-silver: #C4CED4;
+            /* Default Theme (Wizards) */
+            --primary-color: #0E2240;
+            --secondary-color: #E31837;
+            --accent-silver: #C4CED4;
             --dark-surface: #0a1322;
             --card-bg: rgba(255, 255, 255, 0.98);
             --text-main: #1e293b;
@@ -17,6 +18,15 @@
             --border-radius: 16px;
             --glass-shadow: 0 8px 32px 0 rgba(14, 34, 64, 0.08);
             --neon-glow: 0 0 20px rgba(223, 24, 55, 0.25);
+        }
+
+        /* Pacers Theme Overrides */
+        [data-theme="pacers"] {
+            --primary-color: #002D62;
+            --secondary-color: #FDBB30;
+            --accent-silver: #BEC0C2;
+            --dark-surface: #001228;
+            --neon-glow: 0 0 20px rgba(253, 187, 48, 0.35);
         }
 
         /* Smooth Reset */
@@ -35,24 +45,26 @@
             color: var(--text-main);
             line-height: 1.6;
             -webkit-font-smoothing: antialiased;
+            transition: background-color 0.3s ease;
         }
 
         /* Premium Split-Hero Header */
         header {
-            background: linear-gradient(135deg, #050d1a 0%, var(--wizards-navy) 100%);
+            background: linear-gradient(135deg, #050d1a 0%, var(--primary-color) 100%);
             color: #ffffff;
             padding: 90px 20px;
             position: relative;
             overflow: hidden;
-            border-bottom: 6px solid var(--wizards-red);
+            border-bottom: 6px solid var(--secondary-color);
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            transition: border-color 0.4s ease, background 0.4s ease;
         }
 
         header::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: linear-gradient(45deg, transparent 45%, rgba(227, 24, 55, 0.1) 50%, transparent 55%);
+            background: linear-gradient(45deg, transparent 45%, rgba(255, 255, 255, 0.05) 50%, transparent 55%);
             background-size: 30px 30px;
             opacity: 0.4;
         }
@@ -79,16 +91,77 @@
 
         .header-text p {
             font-size: 1.3rem;
-            color: var(--wizards-silver);
+            color: var(--accent-silver);
             margin-top: 10px;
             font-weight: 400;
             letter-spacing: 1px;
             text-transform: uppercase;
+            transition: color 0.4s ease;
+        }
+
+        /* Interactive Theme Toggle Switch */
+        .toggle-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .switch input { 
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background-color: #E31837; /* Wizards Red default */
+            transition: .4s;
+            border-radius: 34px;
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        input:checked + .slider {
+            background-color: #FDBB30; /* Pacers Gold */
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .toggle-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-weight: 700;
+            color: #ffffff;
         }
 
         .team-logo {
             width: 140px;
-            height: auto;
+            height: 140px;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(8px);
             padding: 15px;
@@ -96,6 +169,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 12px 24px rgba(0,0,0,0.2);
             transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            object-fit: contain;
         }
 
         .team-logo:hover {
@@ -137,7 +211,7 @@
         }
 
         h2 {
-            color: var(--wizards-navy);
+            color: var(--primary-color);
             font-size: 2rem;
             font-weight: 800;
             margin-bottom: 25px;
@@ -146,6 +220,7 @@
             gap: 12px;
             text-transform: uppercase;
             letter-spacing: -0.5px;
+            transition: color 0.4s ease;
         }
 
         h2::before {
@@ -153,8 +228,9 @@
             display: inline-block;
             width: 6px;
             height: 28px;
-            background-color: var(--wizards-red);
+            background-color: var(--secondary-color);
             border-radius: 4px;
+            transition: background-color 0.4s ease;
         }
 
         p {
@@ -182,12 +258,13 @@
 
         .data-table th {
             background-color: #f8fafc;
-            color: var(--wizards-navy);
+            color: var(--primary-color);
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.85rem;
             letter-spacing: 0.5px;
             border-bottom: 2px solid #e2e8f0;
+            transition: color 0.4s ease;
         }
 
         .data-table td {
@@ -242,15 +319,17 @@
             width: 10px;
             height: 10px;
             border-radius: 50%;
-            background-color: var(--wizards-red);
-            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(223, 24, 55, 0.2);
+            background-color: var(--secondary-color);
+            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(223, 24, 55, 0.15);
+            transition: background-color 0.4s ease;
         }
 
         .timeline-year {
             font-weight: 800;
-            color: var(--wizards-navy);
+            color: var(--primary-color);
             font-size: 1.2rem;
             margin-bottom: 6px;
+            transition: color 0.4s ease;
         }
 
         /* Signature Player Spotlight Sidebar Card */
@@ -272,9 +351,10 @@
         }
 
         .player-image-container {
-            background: linear-gradient(180deg, var(--wizards-navy) 0%, #050d1a 100%);
+            background: linear-gradient(180deg, var(--primary-color) 0%, #050d1a 100%);
             padding: 40px 0;
             position: relative;
+            transition: background 0.4s ease;
         }
 
         .player-image-container::before {
@@ -292,11 +372,11 @@
             height: 200px;
             border-radius: 50%;
             object-fit: cover;
-            border: 4px solid var(--wizards-red);
+            border: 4px solid var(--secondary-color);
             box-shadow: 0 8px 24px rgba(0,0,0,0.3);
             position: relative;
             z-index: 2;
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.4s ease;
         }
 
         .player-card:hover .player-image {
@@ -310,19 +390,21 @@
         .player-name {
             font-size: 2.2rem;
             font-weight: 900;
-            color: var(--wizards-navy);
+            color: var(--primary-color);
             letter-spacing: -0.5px;
             line-height: 1.1;
             margin-bottom: 4px;
+            transition: color 0.4s ease;
         }
 
         .player-title {
             font-weight: 700;
-            color: var(--wizards-red);
+            color: var(--secondary-color);
             text-transform: uppercase;
             font-size: 0.9rem;
             letter-spacing: 1px;
             margin-bottom: 20px;
+            transition: color 0.4s ease;
         }
 
         .player-details p {
@@ -333,7 +415,7 @@
 
         .mvp-badge {
             display: block;
-            background: linear-gradient(135deg, var(--wizards-red) 0%, #b91c1c 100%);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #b91c1c 100%);
             color: white;
             padding: 14px;
             border-radius: 12px;
@@ -343,6 +425,13 @@
             letter-spacing: 2px;
             box-shadow: 0 4px 15px rgba(227, 24, 55, 0.3);
             border: 1px solid rgba(255,255,255,0.1);
+            transition: background 0.4s ease, box-shadow 0.4s ease;
+        }
+        
+        [data-theme="pacers"] .mvp-badge {
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #d99a07 100%);
+            color: #002D62;
+            box-shadow: 0 4px 15px rgba(253, 187, 48, 0.3);
         }
 
         /* Responsive UI Scaling */
@@ -357,6 +446,9 @@
             }
             .header-text h1 {
                 font-size: 2.8rem;
+            }
+            .toggle-container {
+                justify-content: center;
             }
             main {
                 grid-template-columns: 1fr;
@@ -373,10 +465,19 @@
     <header>
         <div class="header-container">
             <div class="header-text">
-                <h1>Washington Wizards</h1>
+                <h1 id="team-heading">Washington Wizards</h1>
                 <p>facts and stats</p>
+                
+                <div class="toggle-container">
+                    <span class="toggle-label">Wizards</span>
+                    <label class="switch">
+                        <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+                        <span class="slider"></span>
+                    </label>
+                    <span class="toggle-label">Pacers</span>
+                </div>
             </div>
-            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Washington_Wizards_logo.svg/1280px-Washington_Wizards_logo.svg.png" alt="Washington Wizards Team Crest" class="team-logo">
+            <img id="team-logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Washington_Wizards_logo.svg/1280px-Washington_Wizards_logo.svg.png" alt="Team Crest" class="team-logo">
         </div>
     </header>
 
@@ -385,8 +486,8 @@
             
             <section class="content-section">
                 <h2>Franchise Identity & Overview</h2>
-                <p>The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games in the Capital One Arena, located in the Chinatown neighborhood of Washington, D.C.</p>
-                <p>Established in 1961 as the Chicago Packers, the franchise underwent several name changes and relocations—becoming the Zephyrs, moving to Baltimore to become the Bullets, and eventually heading to the capital region. Renamed the Wizards in 1997 to project a fresh modern aesthetic, the franchise has a rich tapestry of historic draft selections, superstar runs, and passionate fan cultures.</p>
+                <p id="overview-p1">The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games in the Capital One Arena, located in the Chinatown neighborhood of Washington, D.C.</p>
+                <p id="overview-p2">Established in 1961 as the Chicago Packers, the franchise underwent several name changes and relocations—becoming the Zephyrs, moving to Baltimore to become the Bullets, and eventually heading to the capital region. Renamed the Wizards in 1997 to project a fresh modern aesthetic, the franchise has a rich tapestry of historic draft selections, superstar runs, and passionate fan cultures.</p>
             </section>
 
             <section class="content-section">
@@ -398,7 +499,7 @@
                             <th>Historical Record Data</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="fact-sheet-body">
                         <tr>
                             <td><strong>Inaugural Season</strong></td>
                             <td>1961 (as Chicago Packers)</td>
@@ -425,7 +526,7 @@
 
             <section class="content-section">
                 <h2>Historical Timelines & Eras</h2>
-                <div class="timeline-container">
+                <div class="timeline-container" id="timeline-box">
                     <div class="timeline-item">
                         <div class="timeline-year">1977-1978 — The Championship Glory</div>
                         <p>Led by Hall of Famers Elvin Hayes and Wes Unseld, the team captured its first and only NBA Championship by defeating the Seattle SuperSonics in an epic 7-game series.</p>
@@ -451,7 +552,7 @@
                             <th>Record Value</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="leaders-table-body">
                         <tr>
                             <td><strong>Total Points</strong></td>
                             <td>Elvin Hayes</td>
@@ -480,17 +581,133 @@
         <aside>
             <div class="player-card">
                 <div class="player-image-container">
-                    <img src="https://cdn.nba.com/teams/legacy/www.nba.com/wizards/sites/wizards/files/legacy/photos/wall_100908_14.jpg" alt="John Wall in Washington Jersey" class="player-image">
+                    <img id="player-img" src="https://cdn.nba.com/teams/legacy/www.nba.com/wizards/sites/wizards/files/legacy/photos/wall_100908_14.jpg" alt="Featured Player" class="player-image">
                 </div>
                 <div class="player-details">
-                    <div class="player-name">John Wall</div>
-                    <div class="player-title">Point Guard | #2 Legend</div>
-                    <p>A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed.</p>
-                    <div class="mvp-badge">Most Valuable Player</div>
+                    <div class="player-name" id="player-name">John Wall</div>
+                    <div class="player-title" id="player-title">Point Guard | #2 Legend</div>
+                    <p id="player-desc">A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed.</p>
+                    <div class="mvp-badge" id="badge-text">Most Valuable Player</div>
                 </div>
             </div>
         </aside>
     </main>
 
+    <script>
+        // Database containing factual records for both organizations
+        const teamData = {
+            wizards: {
+                name: "Washington Wizards",
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Washington_Wizards_logo.svg/1280px-Washington_Wizards_logo.svg.png",
+                overview1: "The Washington Wizards are an American professional basketball team based in Washington, D.C. The Wizards compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Southeast Division. The team plays its home games in the Capital One Arena, located in the Chinatown neighborhood of Washington, D.C.",
+                overview2: "Established in 1961 as the Chicago Packers, the franchise underwent several name changes and relocations—becoming the Zephyrs, moving to Baltimore to become the Bullets, and eventually heading to the capital region. Renamed the Wizards in 1997 to project a fresh modern aesthetic, the franchise has a rich tapestry of historic draft selections, superstar runs, and passionate fan cultures.",
+                facts: [
+                    ["Inaugural Season", "1961 (as Chicago Packers)"],
+                    ["Home Arena", "Capital One Arena (Washington, D.C.)"],
+                    ["NBA Championships", "1 (1978)"],
+                    ["Conference Titles", "4 (1971, 1975, 1978, 1979)"],
+                    ["Division Titles", "8 (Last won in 2017)"]
+                ],
+                timeline: [
+                    { year: "1977-1978 — The Championship Glory", text: "Led by Hall of Famers Elvin Hayes and Wes Unseld, the team captured its first and only NBA Championship by defeating the Seattle SuperSonics in an epic 7-game series." },
+                    { year: "2001-2003 — The Michael Jordan Era", text: "Basketball legend Michael Jordan came out of retirement for a historic final act, playing his last career seasons in Washington and selling out arenas worldwide." },
+                    { year: "2010-2019 — The John Wall Flash Era", text: "Drafted #1 overall in 2010, John Wall brought explosive speed and electric playmaking back to D.C., launching multiple deep Eastern Conference playoff iterations." }
+                ],
+                leaders: [
+                    ["Total Points", "Elvin Hayes", "15,551 PTS"],
+                    ["Total Assists", "John Wall", "5,282 AST"],
+                    ["Total Rebounds", "Wes Unseld", "13,769 REB"],
+                    ["Total Blocks", "Elvin Hayes", "1,558 BLK"]
+                ],
+                player: {
+                    name: "John Wall",
+                    title: "Point Guard | #2 Legend",
+                    desc: "A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed.",
+                    img: "https://cdn.nba.com/teams/legacy/www.nba.com/wizards/sites/wizards/files/legacy/photos/wall_100908_14.jpg",
+                    badge: "Most Valuable Player"
+                }
+            },
+            pacers: {
+                name: "Indiana Pacers",
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Indiana_Pacers_logo.svg/1200px-Indiana_Pacers_logo.svg.png",
+                overview1: "The Indiana Pacers are an American professional basketball team based in Indianapolis, Indiana. The Pacers compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Central Division. The team plays its home games at Gainbridge Fieldhouse, highly revered for its pure basketball-first design.",
+                overview2: "Established in 1967 as an original member of the American Basketball Association (ABA), the Pacers achieved dominant early success before joining the NBA in the 1976 merger. Renowned for their physical grit and fierce postseason rivalries throughout the 1990s and 2000s, the team embodies Indiana's deep-rooted, lifelong love affair with the sport of basketball.",
+                facts: [
+                    ["Inaugural Season", "1967 (Joined NBA in 1976)"],
+                    ["Home Arena", "Gainbridge Fieldhouse (Indianapolis, IN)"],
+                    ["ABA Championships", "3 (1970, 1972, 1973)"],
+                    ["Conference Titles", "1 (2000 NBA)"],
+                    ["Division Titles", "9 (Last won in 2014)"]
+                ],
+                timeline: [
+                    { year: "1967-1976 — The ABA Dynasty", text: "Led by legendary coach Slick Leonard and star Mel Daniels, the powerhouse Pacers dominated the ABA, capturing three championships before transitioning to the NBA." },
+                    { year: "1987-2005 — The Reggie Miller Era", text: "Hall of Fame sharpshooter Reggie Miller defined the franchise for nearly two decades, famous for historic, clutch playoff performances and leading the team to the 2000 NBA Finals." },
+                    { year: "2010-2017 — The Paul George Peak", text: "Forward Paul George evolved into a global superstar in Indiana, engineering back-to-back Eastern Conference Finals runs during epic heavyweight battles against the Heat." }
+                ],
+                leaders: [
+                    ["Total Points", "Reggie Miller", "25,279 PTS"],
+                    ["Total Assists", "Reggie Miller", "4,141 AST"],
+                    ["Total Rebounds", "Mel Daniels", "7,643 REB"],
+                    ["Total Blocks", "Jermaine O'Neal", "1,245 BLK"]
+                ],
+                player: {
+                    name: "Reggie Miller",
+                    title: "Shooting Guard | #31 Legend",
+                    desc: "An iconic 5-time NBA All-Star and premium sniper, Reggie Miller remains the heartbeat of Indiana basketball, forever remembered for his legendary '8 points in 9 seconds' clutch heroics.",
+                    img: "https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/reggie-miller-indiana-pacers-retro-jon-her.jpg",
+                    badge: "Hall of Famer"
+                }
+            }
+        };
+
+        function toggleTheme() {
+            const toggle = document.getElementById('theme-toggle');
+            const activeTeam = toggle.checked ? 'pacers' : 'wizards';
+            
+            // 1. Swap CSS Root Attribute
+            document.documentElement.setAttribute('data-theme', toggle.checked ? 'pacers' : '');
+
+            // Get targeted payload
+            const data = teamData[activeTeam];
+
+            // 2. Refresh Text Nodes
+            document.getElementById('team-heading').textContent = data.name;
+            document.getElementById('overview-p1').textContent = data.overview1;
+            document.getElementById('overview-p2').textContent = data.overview2;
+            document.getElementById('team-logo-img').src = data.logo;
+
+            // 3. Rebuild Quick Facts Table Body
+            let factsHTML = '';
+            data.facts.forEach(fact => {
+                factsHTML += `<tr><td><strong>${fact[0]}</strong></td><td>${fact[1]}</td></tr>`;
+            });
+            document.getElementById('fact-sheet-body').innerHTML = factsHTML;
+
+            // 4. Rebuild Timelines Block
+            let timelineHTML = '';
+            data.timeline.forEach(item => {
+                timelineHTML += `
+                    <div class="timeline-item">
+                        <div class="timeline-year">${item.year}</div>
+                        <p>${item.text}</p>
+                    </div>`;
+            });
+            document.getElementById('timeline-box').innerHTML = timelineHTML;
+
+            // 5. Rebuild Stat Leaders Table Body
+            let leadersHTML = '';
+            data.leaders.forEach(row => {
+                leadersHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
+            });
+            document.getElementById('leaders-table-body').innerHTML = leadersHTML;
+
+            // 6. Update Featured Spotlight Player Card
+            document.getElementById('player-img').src = data.player.img;
+            document.getElementById('player-name').textContent = data.player.name;
+            document.getElementById('player-title').textContent = data.player.title;
+            document.getElementById('player-desc').textContent = data.player.desc;
+            document.getElementById('badge-text').textContent = data.player.badge;
+        }
+    </script>
 </body>
 </html>
