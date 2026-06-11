@@ -22,7 +22,7 @@
             /* Toggle Specific Variables */
             --toggle-bg: rgba(255, 255, 255, 0.08);
             --toggle-indicator: #E31837;
-            --indicator-width: calc(33.333% - 6px);
+            --indicator-width: calc(25% - 6px);
             --left-offset: 4px;
         }
 
@@ -34,7 +34,7 @@
             --dark-surface: #001228;
             --neon-glow: 0 0 20px rgba(253, 187, 48, 0.35);
             --toggle-indicator: #FDBB30;
-            --left-offset: calc(33.333% + 2px);
+            --left-offset: calc(25% + 2px);
         }
 
         /* Lakers Theme Overrides */
@@ -45,7 +45,18 @@
             --dark-surface: #1C0A30;
             --neon-glow: 0 0 20px rgba(253, 185, 39, 0.35);
             --toggle-indicator: #FDB927;
-            --left-offset: calc(66.666% + 1px);
+            --left-offset: calc(50% + 1px);
+        }
+
+        /* Bucks Theme Overrides */
+        [data-theme="bucks"] {
+            --primary-color: #00471B;
+            --secondary-color: #EEE1C6;
+            --accent-silver: #707A18; /* Bucks Tertiary Cascade Green */
+            --dark-surface: #00240E;
+            --neon-glow: 0 0 20px rgba(238, 225, 198, 0.25);
+            --toggle-indicator: #EEE1C6;
+            --left-offset: calc(75% + 1px);
         }
 
         /* Smooth Reset */
@@ -118,7 +129,7 @@
             transition: color 0.4s ease;
         }
 
-        /* Expanded Segmented Control */
+        /* Expanded 4-way Segmented Control */
         .toggle-wrapper {
             margin-top: 25px;
             position: relative;
@@ -128,7 +139,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4px;
             border-radius: 50px;
-            width: 380px;
+            width: 460px;
             height: 50px;
             z-index: 5;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -155,7 +166,7 @@
             border: none;
             outline: none;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -171,8 +182,9 @@
         }
         
         [data-theme="pacers"] .toggle-btn.active,
-        [data-theme="lakers"] .toggle-btn.active {
-            color: #002D62; /* High-contrast text color on bright yellow/gold tracks */
+        [data-theme="lakers"] .toggle-btn.active,
+        [data-theme="bucks"] .toggle-btn.active {
+            color: #002D62; /* High-contrast dynamic contrast over light accents */
         }
 
         .team-logo {
@@ -340,6 +352,11 @@
             transition: background-color 0.4s ease;
         }
 
+        /* Bucks Specific Bullet Dot Ring adjustment */
+        [data-theme="bucks"] .timeline-item::after {
+            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(0, 71, 27, 0.15);
+        }
+
         .timeline-year {
             font-weight: 800;
             color: var(--primary-color);
@@ -422,6 +439,10 @@
             margin-bottom: 20px;
             transition: color 0.4s ease;
         }
+        
+        [data-theme="bucks"] .player-title {
+            color: #00471B; /* Adjust visibility of subtitle under cream layout */
+        }
 
         .player-details p {
             font-size: 1rem;
@@ -445,10 +466,17 @@
         }
         
         [data-theme="pacers"] .mvp-badge,
-        [data-theme="lakers"] .mvp-badge {
+        [data-theme="lakers"] .mvp-badge,
+        [data-theme="bucks"] .mvp-badge {
             background: linear-gradient(135deg, var(--secondary-color) 0%, #d99a07 100%);
             color: #050d1a;
             box-shadow: 0 4px 15px rgba(253, 187, 48, 0.3);
+        }
+
+        [data-theme="bucks"] .mvp-badge {
+            background: linear-gradient(135deg, #EEE1C6 0%, #c5b89d 100%);
+            color: #00471B;
+            box-shadow: 0 4px 15px rgba(238, 225, 198, 0.4);
         }
 
         /* Responsive UI Scaling */
@@ -491,6 +519,7 @@
                     <button type="button" id="btn-wizards" class="toggle-btn active" onclick="setTeam('wizards')">Wizards</button>
                     <button type="button" id="btn-pacers" class="toggle-btn" onclick="setTeam('pacers')">Pacers</button>
                     <button type="button" id="btn-lakers" class="toggle-btn" onclick="setTeam('lakers')">Lakers</button>
+                    <button type="button" id="btn-bucks" class="toggle-btn" onclick="setTeam('bucks')">Bucks</button>
                 </div>
             </div>
             <img id="team-logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Washington_Wizards_logo.svg/1280px-Washington_Wizards_logo.svg.png" alt="Team Crest" class="team-logo">
@@ -610,7 +639,7 @@
     </main>
 
     <script>
-        // Database object mapping structural facts for Wizards, Pacers, and Lakers
+        // Structural Database across teams
         const teamData = {
             wizards: {
                 name: "Washington Wizards",
@@ -645,7 +674,7 @@
             },
             pacers: {
                 name: "Indiana Pacers",
-                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Indiana_Pacers.svg/1280px-Indiana_Pacers.svg.png",
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Indiana_Pacers_logo.svg/1200px-Indiana_Pacers_logo.svg.png",
                 overview1: "The Indiana Pacers are an American professional basketball team based in Indianapolis, Indiana. The Pacers compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Central Division. The team plays its home games at Gainbridge Fieldhouse, highly revered for its pure basketball-first design.",
                 overview2: "Established in 1967 as an original member of the American Basketball Association (ABA), the Pacers achieved dominant early success before joining the NBA in the 1976 merger. Renowned for their physical grit and fierce postseason rivalries throughout the 1990s and 2000s, the team embodies Indiana's deep-rooted, lifelong love affair with the sport of basketball.",
                 facts: [
@@ -670,7 +699,7 @@
                     name: "Reggie Miller",
                     title: "Shooting Guard | #31 Legend",
                     desc: "An iconic 5-time NBA All-Star and premium sniper, Reggie Miller remains the heartbeat of Indiana basketball, forever remembered for his legendary '8 points in 9 seconds' clutch heroics.",
-                    img: "https://i.ytimg.com/vi/9cSjsKmiCF8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCKax0NQmU9cIOPh4AUn0-wyY5bPA",
+                    img: "https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/reggie-miller-indiana-pacers-retro-jon-her.jpg",
                     badge: "Hall of Famer"
                 }
             },
@@ -701,8 +730,39 @@
                     name: "Kobe Bryant",
                     title: "Shooting Guard | #24 & #8 Legend",
                     desc: "An 18-time All-Star, 5-time NBA Champion, and regular-season MVP, Kobe Bryant crystallized the 'Mamba Mentality' worldwide, solidifying himself as one of the fiercest competitors in basketball history.",
-                    img: "https://www.nuorigins.com/wp-content/uploads/2020/01/kobe-bryant-1-1.jpg",
+                    img: "https://www.hollywoodreporter.com/wp-content/uploads/2020/01/gettyimages-53125307-h_2020.jpg",
                     badge: "Mamba Legend"
+                }
+            },
+            bucks: {
+                name: "Milwaukee Bucks",
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Milwaukee_Bucks_logo.svg/1200px-Milwaukee_Bucks_logo.svg.png",
+                overview1: "The Milwaukee Bucks are an American professional basketball team based in Milwaukee, Wisconsin. The Bucks compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Central Division. The team hosts its home games at Fiserv Forum, a state-of-the-art entertainment anchor in downtown Milwaukee.",
+                overview2: "Founded as an expansion franchise in 1968, the Bucks quickly became a powerhouse by drafting Lew Alcindor (Kareem Abdul-Jabbar) and capturing a title in only their third year. Following decades of competitive playoff cycles, the franchise returned to the absolute mountaintop of global basketball culture behind the unstoppable interior dominance of international superstar Giannis Antetokounmpo.",
+                facts: [
+                    ["Inaugural Season", "1968 (Expansion Team)"],
+                    ["Home Arena", "Fiserv Forum (Milwaukee, WI)"],
+                    ["NBA Championships", "2 (1971, 2021)"],
+                    ["Conference Titles", "3 (1971, 1974, 2021)"],
+                    ["Division Titles", "19 (Last won in 2024)"]
+                ],
+                timeline: [
+                    { year: "1970-1971 — The Early Kareem & Oscar Title", text: "In just their third year of existence, the Bucks pulled off an unprecedented championship sweep behind the dominant inside presence of Kareem Abdul-Jabbar and veteran playmaking icon Oscar Robertson." },
+                    { year: "1980-1989 — The Sidney Moncrief Defensive Run", text: "Coached by Don Nelson, the fiercely competitive 1980s Bucks captured seven consecutive division titles, led on-court by back-to-back Defensive Player of the Year Sidney Moncrief." },
+                    { year: "2013-Present — The Giannis Rise & 2021 Glory", text: "The selection of raw Greek forward Giannis Antetokounmpo transformed the franchise completely. He secured back-to-back league MVPs, capped off by an legendary 50-point Game 6 performance to capture the 2021 NBA Championship." }
+                ],
+                leaders: [
+                    ["Total Points", "Giannis Antetokounmpo", "18,900+ PTS"],
+                    ["Total Assists", "Giannis Antetokounmpo", "3,900+ AST"],
+                    ["Total Rebounds", "Kareem Abdul-Jabbar", "7,161 REB"],
+                    ["Total Blocks", "Giannis Antetokounmpo", "990+ BLK"]
+                ],
+                player: {
+                    name: "Giannis Antetokounmpo",
+                    title: "Power Forward | #34 Superstar",
+                    desc: "An 8-time All-Star, 2-time regular-season MVP, and defensive anchor, the 'Greek Freak' stands tall as the premier operational engine of the modern Bucks, forever legendary for bringing an NBA title back to Milwaukee in 2021.",
+                    img: "https://images.news18.com/ibnlive/uploads/2021/07/1626845347_giannis-antetokounmpo.jpg",
+                    badge: "League MVP"
                 }
             }
         };
@@ -712,6 +772,7 @@
             document.getElementById('btn-wizards').classList.remove('active');
             document.getElementById('btn-pacers').classList.remove('active');
             document.getElementById('btn-lakers').classList.remove('active');
+            document.getElementById('btn-bucks').classList.remove('active');
             
             document.getElementById(`btn-${activeTeam}`).classList.add('active');
             
