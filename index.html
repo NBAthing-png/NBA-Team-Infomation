@@ -22,6 +22,7 @@
             /* Toggle Specific Variables */
             --toggle-bg: rgba(255, 255, 255, 0.08);
             --toggle-indicator: #E31837;
+            --indicator-width: calc(33.333% - 6px);
             --left-offset: 4px;
         }
 
@@ -32,9 +33,19 @@
             --accent-silver: #BEC0C2;
             --dark-surface: #001228;
             --neon-glow: 0 0 20px rgba(253, 187, 48, 0.35);
-            
             --toggle-indicator: #FDBB30;
-            --left-offset: calc(50% + 4px);
+            --left-offset: calc(33.333% + 2px);
+        }
+
+        /* Lakers Theme Overrides */
+        [data-theme="lakers"] {
+            --primary-color: #552583;
+            --secondary-color: #FDB927;
+            --accent-silver: #C4CED4;
+            --dark-surface: #1C0A30;
+            --neon-glow: 0 0 20px rgba(253, 185, 39, 0.35);
+            --toggle-indicator: #FDB927;
+            --left-offset: calc(66.666% + 1px);
         }
 
         /* Smooth Reset */
@@ -107,7 +118,7 @@
             transition: color 0.4s ease;
         }
 
-        /* Segmented Button Group Toggle */
+        /* Expanded Segmented Control */
         .toggle-wrapper {
             margin-top: 25px;
             position: relative;
@@ -117,19 +128,19 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4px;
             border-radius: 50px;
-            width: 280px;
+            width: 380px;
             height: 50px;
             z-index: 5;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
         }
 
-        /* The sliding background indicator */
+        /* Sliding Track Indicator */
         .toggle-wrapper::before {
             content: '';
             position: absolute;
             top: 4px;
             left: var(--left-offset);
-            width: calc(50% - 6px);
+            width: var(--indicator-width);
             height: calc(100% - 8px);
             background-color: var(--toggle-indicator);
             border-radius: 40px;
@@ -144,7 +155,7 @@
             border: none;
             outline: none;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -155,16 +166,17 @@
             border-radius: 40px;
         }
 
-        /* Active Text Coloring dynamic rules */
         .toggle-btn.active {
             color: #ffffff;
         }
-        [data-theme="pacers"] .toggle-btn.active {
-            color: #002D62; /* Navy text on Gold background looks cleaner */
+        
+        [data-theme="pacers"] .toggle-btn.active,
+        [data-theme="lakers"] .toggle-btn.active {
+            color: #002D62; /* High-contrast text color on bright yellow/gold tracks */
         }
 
         .team-logo {
-            width: 140px;
+            width: 150px;
             height: 140px;
             background: rgba(255, 255, 255, 0.07);
             backdrop-filter: blur(8px);
@@ -198,7 +210,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Styled Cards Container */
+        /* Cards Structure */
         .content-section {
             background: var(--card-bg);
             padding: 40px;
@@ -432,9 +444,10 @@
             transition: background 0.4s ease, box-shadow 0.4s ease;
         }
         
-        [data-theme="pacers"] .mvp-badge {
+        [data-theme="pacers"] .mvp-badge,
+        [data-theme="lakers"] .mvp-badge {
             background: linear-gradient(135deg, var(--secondary-color) 0%, #d99a07 100%);
-            color: #002D62;
+            color: #050d1a;
             box-shadow: 0 4px 15px rgba(253, 187, 48, 0.3);
         }
 
@@ -452,6 +465,8 @@
                 font-size: 2.8rem;
             }
             .toggle-wrapper {
+                width: 100%;
+                max-width: 360px;
                 margin: 20px auto 0;
             }
             main {
@@ -475,6 +490,7 @@
                 <div class="toggle-wrapper">
                     <button type="button" id="btn-wizards" class="toggle-btn active" onclick="setTeam('wizards')">Wizards</button>
                     <button type="button" id="btn-pacers" class="toggle-btn" onclick="setTeam('pacers')">Pacers</button>
+                    <button type="button" id="btn-lakers" class="toggle-btn" onclick="setTeam('lakers')">Lakers</button>
                 </div>
             </div>
             <img id="team-logo-img" src="https://upload.wikimedia.org/wikipedia/en/thumb/0/02/Washington_Wizards_logo.svg/1280px-Washington_Wizards_logo.svg.png" alt="Team Crest" class="team-logo">
@@ -594,7 +610,7 @@
     </main>
 
     <script>
-        // Database containing factual records for both organizations
+        // Database object mapping structural facts for Wizards, Pacers, and Lakers
         const teamData = {
             wizards: {
                 name: "Washington Wizards",
@@ -629,7 +645,7 @@
             },
             pacers: {
                 name: "Indiana Pacers",
-                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Indiana_Pacers.svg/1280px-Indiana_Pacers.svg.png",
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Indiana_Pacers_logo.svg/1200px-Indiana_Pacers_logo.svg.png",
                 overview1: "The Indiana Pacers are an American professional basketball team based in Indianapolis, Indiana. The Pacers compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Central Division. The team plays its home games at Gainbridge Fieldhouse, highly revered for its pure basketball-first design.",
                 overview2: "Established in 1967 as an original member of the American Basketball Association (ABA), the Pacers achieved dominant early success before joining the NBA in the 1976 merger. Renowned for their physical grit and fierce postseason rivalries throughout the 1990s and 2000s, the team embodies Indiana's deep-rooted, lifelong love affair with the sport of basketball.",
                 facts: [
@@ -654,42 +670,70 @@
                     name: "Reggie Miller",
                     title: "Shooting Guard | #31 Legend",
                     desc: "An iconic 5-time NBA All-Star and premium sniper, Reggie Miller remains the heartbeat of Indiana basketball, forever remembered for his legendary '8 points in 9 seconds' clutch heroics.",
-                    img: "https://i.ytimg.com/vi/9cSjsKmiCF8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCKax0NQmU9cIOPh4AUn0-wyY5bPA",
+                    img: "https://images.fineartamerica.com/images/artworkimages/mediumlarge/3/reggie-miller-indiana-pacers-retro-jon-her.jpg",
                     badge: "Hall of Famer"
+                }
+            },
+            lakers: {
+                name: "Los Angeles Lakers",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Los_Angeles_Lakers_logo.svg",
+                overview1: "The Los Angeles Lakers are an American professional basketball team based in Los Angeles, California. The Lakers compete in the National Basketball Association (NBA) as a member of the league's Western Conference Pacific Division. The team plays its home match fixtures inside Crypto.com Arena, sharing the downtown stadium under global marquee lighting.",
+                overview2: "Originating in 1947 as the Minneapolis Lakers, the franchise relocated to California in 1960. As one of the most successful sports franchises on earth, the Lakers have defined eras of basketball history through cultural phenomena such as 'Showtime' in the 1980s and continuous generation-defining dynasties.",
+                facts: [
+                    ["Inaugural Season", "1947 (as Minneapolis Lakers)"],
+                    ["Home Arena", "Crypto.com Arena (Los Angeles, CA)"],
+                    ["NBA Championships", "17 (Tied for all-time record)"],
+                    ["Conference Titles", "32 (Western Conference Record)"],
+                    ["Division Titles", "24 (Last won in 2020)"]
+                ],
+                timeline: [
+                    { year: "1979-1989 — The Showtime Dynasty", text: "Driven by Magic Johnson's fast-break playmaking and Kareem Abdul-Jabbar's skyhook, the glamorous Lakers captured 5 NBA titles and dominated global pop culture." },
+                    { year: "1996-2004 — The Shaq & Kobe Reign", text: "The devastating interior power of Shaquille O'Neal coupled with Kobe Bryant's lethal perimeter execution executed a historic championship 'Three-Peat' from 2000-2002." },
+                    { year: "2018-Present — The LeBron James Title Era", text: "All-time great LeBron James arrived in Southern California, restoring championship glory by leading the franchise to its 17th NBA Finals trophy in 2020." }
+                ],
+                leaders: [
+                    ["Total Points", "Kobe Bryant", "33,643 PTS"],
+                    ["Total Assists", "Magic Johnson", "10,141 AST"],
+                    ["Total Rebounds", "Elgin Baylor", "11,487 REB"],
+                    ["Total Blocks", "Kareem Abdul-Jabbar", "2,694 BLK"]
+                ],
+                player: {
+                    name: "Kobe Bryant",
+                    title: "Shooting Guard | #24 & #8 Legend",
+                    desc: "An 18-time All-Star, 5-time NBA Champion, and regular-season MVP, Kobe Bryant crystallized the 'Mamba Mentality' worldwide, solidifying himself as one of the fiercest competitors in basketball history.",
+                    img: "https://www.hollywoodreporter.com/wp-content/uploads/2020/01/gettyimages-53125307-h_2020.jpg",
+                    badge: "Mamba Legend"
                 }
             }
         };
 
         function setTeam(activeTeam) {
-            // 1. Manage Active states on the buttons
+            // 1. Refresh active toggle button highlights
             document.getElementById('btn-wizards').classList.remove('active');
             document.getElementById('btn-pacers').classList.remove('active');
+            document.getElementById('btn-lakers').classList.remove('active');
             
-            if (activeTeam === 'wizards') {
-                document.getElementById('btn-wizards').classList.add('active');
-                document.documentElement.setAttribute('data-theme', '');
-            } else {
-                document.getElementById('btn-pacers').classList.add('active');
-                document.documentElement.setAttribute('data-theme', 'pacers');
-            }
+            document.getElementById(`btn-${activeTeam}`).classList.add('active');
+            
+            // 2. Set dynamic theme string to DOM document root
+            document.documentElement.setAttribute('data-theme', activeTeam === 'wizards' ? '' : activeTeam);
 
-            // Get targeted payload from local object
             const data = teamData[activeTeam];
 
-            // 2. Refresh Main Header Elements
+            // 3. Update main branding parameters
             document.getElementById('team-heading').textContent = data.name;
             document.getElementById('overview-p1').textContent = data.overview1;
             document.getElementById('overview-p2').textContent = data.overview2;
             document.getElementById('team-logo-img').src = data.logo;
 
-            // 3. Rebuild Quick Facts Table Body
+            // 4. Rebuild Facts structural layout
             let factsHTML = '';
             data.facts.forEach(fact => {
                 factsHTML += `<tr><td><strong>${fact[0]}</strong></td><td>${fact[1]}</td></tr>`;
             });
             document.getElementById('fact-sheet-body').innerHTML = factsHTML;
 
-            // 4. Rebuild Timelines Block
+            // 5. Rebuild Historical timeline block
             let timelineHTML = '';
             data.timeline.forEach(item => {
                 timelineHTML += `
@@ -700,14 +744,14 @@
             });
             document.getElementById('timeline-box').innerHTML = timelineHTML;
 
-            // 5. Rebuild Stat Leaders Table Body
+            // 6. Refresh leadership numbers data rows
             let leadersHTML = '';
             data.leaders.forEach(row => {
                 leadersHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
             });
             document.getElementById('leaders-table-body').innerHTML = leadersHTML;
 
-            // 6. Update Featured Spotlight Player Card
+            // 7. Inject dedicated profile data cards elements
             document.getElementById('player-img').src = data.player.img;
             document.getElementById('player-name').textContent = data.player.name;
             document.getElementById('player-title').textContent = data.player.title;
