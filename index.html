@@ -22,44 +22,11 @@
             /* Toggle Specific Variables */
             --toggle-bg: rgba(255, 255, 255, 0.08);
             --toggle-indicator: #E31837;
-            --indicator-width: calc(20% - 6px); /* Adjusted for 5 buttons */
+            --indicator-width: calc(50% - 6px);
             --left-offset: 4px;
         }
 
-        /* Pacers Theme Overrides */
-        [data-theme="pacers"] {
-            --primary-color: #002D62;
-            --secondary-color: #FDBB30;
-            --accent-silver: #BEC0C2;
-            --dark-surface: #001228;
-            --neon-glow: 0 0 20px rgba(253, 187, 48, 0.35);
-            --toggle-indicator: #FDBB30;
-            --left-offset: calc(20% + 2px);
-        }
-
-        /* Lakers Theme Overrides */
-        [data-theme="lakers"] {
-            --primary-color: #552583;
-            --secondary-color: #FDB927;
-            --accent-silver: #C4CED4;
-            --dark-surface: #1C0A30;
-            --neon-glow: 0 0 20px rgba(253, 185, 39, 0.35);
-            --toggle-indicator: #FDB927;
-            --left-offset: calc(40% + 2px);
-        }
-
-        /* Bucks Theme Overrides */
-        [data-theme="bucks"] {
-            --primary-color: #00471B;
-            --secondary-color: #EEE1C6;
-            --accent-silver: #707A18; 
-            --dark-surface: #00240E;
-            --neon-glow: 0 0 20px rgba(238, 225, 198, 0.25);
-            --toggle-indicator: #EEE1C6;
-            --left-offset: calc(60% + 2px);
-        }
-
-        /* Creator Mission Theme Overrides (Special Tech Accent) */
+        /* Creator Mission Theme Overrides */
         [data-theme="mission"] {
             --primary-color: #0f172a;
             --secondary-color: #38bdf8;
@@ -67,7 +34,7 @@
             --dark-surface: #020617;
             --neon-glow: 0 0 20px rgba(56, 189, 248, 0.35);
             --toggle-indicator: #38bdf8;
-            --left-offset: calc(80% + 2px);
+            --left-offset: calc(50% + 2px);
         }
 
         /* Smooth Reset */
@@ -140,7 +107,7 @@
             transition: color 0.4s ease;
         }
 
-        /* Expanded 5-way Segmented Control */
+        /* 2-way Segmented Control */
         .toggle-wrapper {
             margin-top: 25px;
             position: relative;
@@ -150,7 +117,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4px;
             border-radius: 50px;
-            width: 620px; /* Widened to smoothly host 5 options */
+            width: 400px;
             height: 50px;
             z-index: 5;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -177,7 +144,7 @@
             border: none;
             outline: none;
             color: rgba(255, 255, 255, 0.6);
-            font-size: 0.78rem;
+            font-size: 0.85rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
@@ -191,13 +158,6 @@
 
         .toggle-btn.active {
             color: #ffffff;
-        }
-        
-        [data-theme="pacers"] .toggle-btn.active,
-        [data-theme="lakers"] .toggle-btn.active,
-        [data-theme="bucks"] .toggle-btn.active,
-        [data-theme="mission"] .toggle-btn.active {
-            color: #002D62; /* High-contrast dynamic contrast over light accents */
         }
 
         [data-theme="mission"] .toggle-btn.active {
@@ -369,10 +329,6 @@
             transition: background-color 0.4s ease;
         }
 
-        /* Dynamic Bullet Dot Rings */
-        [data-theme="bucks"] .timeline-item::after {
-            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(0, 71, 27, 0.15);
-        }
         [data-theme="mission"] .timeline-item::after {
             box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(56, 189, 248, 0.15);
         }
@@ -459,10 +415,6 @@
             margin-bottom: 20px;
             transition: color 0.4s ease;
         }
-        
-        [data-theme="bucks"] .player-title {
-            color: #00471B;
-        }
 
         .player-details p {
             font-size: 1rem;
@@ -483,20 +435,6 @@
             box-shadow: 0 4px 15px rgba(227, 24, 55, 0.3);
             border: 1px solid rgba(255,255,255,0.1);
             transition: background 0.4s ease, box-shadow 0.4s ease;
-        }
-        
-        [data-theme="pacers"] .mvp-badge,
-        [data-theme="lakers"] .mvp-badge,
-        [data-theme="bucks"] .mvp-badge {
-            background: linear-gradient(135deg, var(--secondary-color) 0%, #d99a07 100%);
-            color: #050d1a;
-            box-shadow: 0 4px 15px rgba(253, 187, 48, 0.3);
-        }
-
-        [data-theme="bucks"] .mvp-badge {
-            background: linear-gradient(135deg, #EEE1C6 0%, #c5b89d 100%);
-            color: #00471B;
-            box-shadow: 0 4px 15px rgba(238, 225, 198, 0.4);
         }
 
         [data-theme="mission"] .mvp-badge {
@@ -551,9 +489,6 @@
                 
                 <div class="toggle-wrapper">
                     <button type="button" id="btn-wizards" class="toggle-btn active" onclick="setTeam('wizards')">Wizards</button>
-                    <button type="button" id="btn-pacers" class="toggle-btn" onclick="setTeam('pacers')">Pacers</button>
-                    <button type="button" id="btn-lakers" class="toggle-btn" onclick="setTeam('lakers')">Lakers</button>
-                    <button type="button" id="btn-bucks" class="toggle-btn" onclick="setTeam('bucks')">Bucks</button>
                     <button type="button" id="btn-mission" class="toggle-btn" onclick="setTeam('mission')">Why This Site?</button>
                 </div>
             </div>
@@ -678,7 +613,6 @@
     </main>
 
     <script>
-        // Expanded Database hosting the 4 NBA Teams + your custom profile view
         const teamData = {
             wizards: {
                 name: "Washington Wizards",
@@ -712,203 +646,108 @@
                 player: {
                     name: "John Wall",
                     title: "Point Guard | #2 Legend",
-                    desc: "A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed. With his powerful playmaking and assists, he earned the nickname:",
+                    desc: "A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed.",
                     img: "https://cdn.nba.com/teams/legacy/www.nba.com/wizards/sites/wizards/files/legacy/photos/wall_100908_14.jpg",
-                    badge: "Optimus Dime"
-                }
-            },
-            pacers: {
-                name: "Indiana Pacers",
-                subheading: "facts and stats",
-                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Indiana_Pacers.svg/1280px-Indiana_Pacers.svg.png",
-                sec1Title: "Franchise Identity & Overview",
-                overview1: "The Indiana Pacers are an American professional basketball team based in Indianapolis, Indiana. The Pacers compete in the National Basketball Association (NBA) as a member of the league's Eastern Conference Central Division. The team plays its home games at Gainbridge Fieldhouse, highly revered for its pure basketball-first design.",
-                overview2: "Established in 1967 as an original member of the American Basketball Association (ABA), the Pacers achieved dominant early success before joining the NBA in the 1976 merger. Renowned for their physical grit and fierce postseason rivalries throughout the 1990s and 2000s, the team embodies Indiana's deep-rooted, lifelong love affair with the sport of basketball.",
-                sec2Title: "Quick Fact Sheet",
-                thMetric: "Franchise Metric",
-                thData: "Historical Record Data",
-                facts: [
-                    ["Inaugural Season", "1967 (Joined NBA in 1976)"],
-                    ["Home Arena", "Gainbridge Fieldhouse (Indianapolis, IN)"],
-                    ["ABA Championships", "3 (1970, 1972, 1973)"],
-                    ["Conference Titles", "1 (2000 NBA)"],
-                    ["Division Titles", "9 (Last won in 2014)"]
-                ],
-                sec3Title: "Historical Timelines & Eras",
-                timeline: [
-                    { year: "1967-1976 — The ABA Dynasty", text: "Led by legendary coach Slick Leonard and star Mel Daniels, the powerhouse Pacers dominated the ABA, capturing three championships before transitioning to the NBA." },
-                    { year: "1987-2005 — The Reggie Miller Era", text: "Hall of Fame sharpshooter Reggie Miller defined the franchise for nearly two decades, famous for historic, clutch playoff performances and leading the team to the 2000 NBA Finals." },
-                    { year: "2010-2017 — The Paul George Peak", text: "Forward Paul George evolved into a global superstar in Indiana, engineering back-to-back Eastern Conference Finals runs during epic heavyweight battles against the Heat." }
-                ],
-                leaders: [
-                    ["Total Points", "Reggie Miller", "25,279 PTS"],
-                    ["Total Assists", "Reggie Miller", "4,141 AST"],
-                    ["Total Rebounds", "Mel Daniels", "7,643 REB"],
-                    ["Total Blocks", "Jermaine O'Neal", "1,245 BLK"]
-                ],
-                player: {
-                    name: "Reggie Miller",
-                    title: "Shooting Guard | #31 Legend",
-                    desc: "An iconic 5-time NBA All-Star and premium sniper, Reggie Miller remains the heartbeat of Indiana basketball, forever remembered for his legendary '8 points in 9 seconds' clutch heroics. This clutch earned him the title:",
-                    img: "https://i.ytimg.com/vi/9cSjsKmiCF8/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCKax0NQmU9cIOPh4AUn0-wyY5bPA",
-                    badge: "Knick Killer"
-                }
-            },
-            lakers: {
-                name: "Los Angeles Lakers",
-                subheading: "facts and stats",
-                logo: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Los_Angeles_Lakers_logo.svg",
-                sec1Title: "Franchise Identity & Overview",
-                overview1: "The Los Angeles Lakers are an American professional basketball team based in Los Angeles, California. The Lakers compete in the National Basketball Association (NBA) as a member of the league's Western Conference Pacific Division. The team plays its home match fixtures inside Crypto.com Arena, sharing the downtown stadium under global marquee lighting.",
-                overview2: "Originating in 1947 as the Minneapolis Lakers, the franchise relocated to California in 1960. As one of the most successful sports franchises on earth, the Lakers have defined eras of basketball history through cultural phenomena such as 'Showtime' in the 1980s and continuous generation-defining dynasties.",
-                sec2Title: "Quick Fact Sheet",
-                thMetric: "Franchise Metric",
-                thData: "Historical Record Data",
-                facts: [
-                    ["Inaugural Season", "1947 (as Minneapolis Lakers)"],
-                    ["Home Arena", "Crypto.com Arena (Los Angeles, CA)"],
-                    ["NBA Championships", "17 (Tied for all-time record)"],
-                    ["Conference Titles", "32 (Western Conference Record)"],
-                    ["Division Titles", "24 (Last won in 2020)"]
-                ],
-                sec3Title: "Historical Timelines & Eras",
-                timeline: [
-                    { year: "1979-1989 — The Showtime Dynasty", text: "Driven by Magic Johnson's fast-break playmaking and Kareem Abdul-Jabbar's skyhook, the glamorous Lakers captured 5 NBA titles and dominated global pop culture." },
-                    { year: "1996-2004 — The Shaq & Kobe Reign", text: "The devastating interior power of Shaquille O'Neal coupled with Kobe Bryant's lethal perimeter execution executed a historic championship 'Three-Peat' from 2000-2002." },
-                    { year: "2018-Present — The LeBron James Title Era", text: "All-time great LeBron James arrived in Southern California, restoring championship glory by leading the franchise to its 17th NBA Finals trophy in 2020." }
-                ],
-                leaders: [
-                    ["Total Points", "Kobe Bryant", "33,643 PTS"],
-                    ["Total Assists", "Magic Johnson", "10,141 AST"],
-                    ["Total Rebounds", "Elgin Baylor", "11,487 REB"],
-                    ["Total Blocks", "Kareem Abdul-Jabbar", "2,694 BLK"]
-                ],
-                player: {
-                    name: "Kobe Bryant",
-                    title: "Shooting Guard | #24 & #8 Legend",
-                    desc: "An 18-time All-Star, 5-time NBA Champion, and regular-season MVP, Kobe Bryant crystallized the 'Mamba Mentality' worldwide, solidifying himself as one of the fiercest competitors in basketball history. Fans gave Kobe the nickname:",
-                    img: "https://hips.hearstapps.com/hmg-prod/images/kobe-bryant-of-the-los-angeles-lakers-adjusts-his-jersey-news-photo-1769009856.pjpeg?crop=0.89333xw:1xh;center,top&resize=1200:*",
-                    badge: "Black Mamba"
-                }
-            },
-            bucks: {
-                name: "Milwaukee Bucks",
-                subheading: "facts and stats",
-                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/4/4a/Milwaukee_Bucks_logo.svg/1280px-Milwaukee_Bucks_logo.svg.png",
-                sec1Title: "Franchise Identity & Overview",
-                overview1: "The Milwaukee Bucks are an American professional basketball team based in Milwaukee, Wisconsin. They compete in the NBA as a member of the Eastern Conference Central Division. Home games are contested at the high-tech Fiserv Forum downtown.",
-                overview2: "Founded as an expansion team in 1968, the franchise quickly rose to prominence by drafting Kareem Abdul-Jabbar. Decades later, a resurgence powered by historic draft development built them back into an indomitable championship-caliber force in the modern era.",
-                sec2Title: "Quick Fact Sheet",
-                thMetric: "Franchise Metric",
-                thData: "Historical Record Data",
-                facts: [
-                    ["Inaugural Season", "1968 (Expansion Franchise)"],
-                    ["Home Arena", "Fiserv Forum (Milwaukee, WI)"],
-                    ["NBA Championships", "2 (1971, 2021)"],
-                    ["Conference Titles", "3 (1971, 1974, 2021)"],
-                    ["Division Titles", "19 (Last won in 2024)"]
-                ],
-                sec3Title: "Historical Timelines & Eras",
-                timeline: [
-                    { year: "1969-1975 — Kareem & Big O Era", text: "Alcindor (Kareem) paired up with Oscar Robertson to claim the 1971 NBA Title in just the franchise's third year of existence." },
-                    { year: "1980-1989 — The Sidney Moncrief Years", text: "The Defensive Player of the Year architected highly competitive division reigns and legendary Eastern battles all decade long." },
-                    { year: "2013-Present — The Greek Freak Ascent", text: "Giannis Antetokounmpo grew from a raw prospect into a back-to-back league MVP, sealing the emotional 2021 NBA Championship." }
-                ],
-                leaders: [
-                    ["Total Points", "Giannis Antetokounmpo", "18,500+ PTS"],
-                    ["Total Assists", "Giannis Antetokounmpo", "3,800+ AST"],
-                    ["Total Rebounds", "Kareem Abdul-Jabbar", "7,161 REB"],
-                    ["Total Blocks", "Giannis Antetokounmpo", "950+ BLK"]
-                ],
-                player: {
-                    name: "Giannis A.",
-                    title: "Power Forward | #34 Superstar",
-                    desc: "An incredible draft find, Giannis built an unmatched modern legacy in Milwaukee with sheer strength, incredible work ethics, and defensive prowess. Standing 6'11 yet still moving like a point guard, he earned the nickname:",
-                    img: "https://bworldonline.com/wp-content/uploads/2023/11/NBA-Giannis-Antetokounmpo.jpg",
-                    badge: "Greek Freak"
+                    badge: "Most Valuable Player"
                 }
             },
             mission: {
-                name: "Why did I create this website?",
-                sec1Title: "EIF",
-                overview1: "I created this website for my schools EIF project - Dustin.",
+                name: "NBA Fan Hub",
+                subheading: "Project Vision & Architecture",
+                logo: "https://upload.wikimedia.org/wikipedia/commons/7/7a/Basketball.svg",
+                sec1Title: "Why Create This Platform?",
+                overview1: "This web portal was engineered as an interactive fan sanctuary built to blend beautiful modern design with comprehensive sport history. Basketball analytics and roster dynamic views change instantaneously, demonstrating the clean power of modular CSS and vanilla JavaScript data management.",
+                overview2: "By mapping distinct design properties directly to custom data states, this platform bridges the gap between clean structural architecture and engaging sports journalism. Our layout showcases historic eras, individual performance stats, and timeless team icons effortlessly.",
+                sec2Title: "Platform Core Features",
+                thMetric: "Feature Pillar",
+                thData: "Technical Implementation Details",
+                facts: [
+                    ["State Machine", "100% Client-side JSON switching engine"],
+                    ["Design Tokens", "Dynamic CSS custom variable themes"],
+                    ["Responsive Architecture", "Adaptive media query configurations"],
+                    ["Layout Pipeline", "Asymmetrical CSS Grid with Flex containers"]
+                ],
+                sec3Title: "Development Timeline",
+                timeline: [
+                    { year: "Phase 1 — Interface Framework", text: "Designed the high-contrast segmented control track system and premium responsive header system to support dynamic themes." },
+                    { year: "Phase 2 — State Engine Injection", text: "Populated custom application state trees allowing completely atomic transformations across franchise properties on command." },
+                    { year: "Phase 3 — UI Refinement", text: "Integrated smooth cubic-bezier transitions, glassy accent blurs, and localized neon glow profiles for high-end polish." }
+                ],
+                leaders: [
+                    ["Total Blocks", "Ben Wallace", "2,137 career BLK"],
+                    ["Defensive Player of the Year Titles", "Ben Wallace", "4x (NBA All-Time Tied Record)"],
+                    ["Total Rebounds", "Ben Wallace", "10,482 career REB"],
+                    ["NBA Championships", "Ben Wallace", "1 (2004 Legend)"]
+                ],
                 player: {
-                    name: "Dustin",
-                    title: "UI Engineer & Developer",
-                    desc: "Pretty cool dude, Made this tough website.",
-                    badge: "Lead Designer"
+                    name: "Ben Wallace",
+                    title: "Center | Defensive Legend",
+                    desc: "Ben Wallace spent early foundational years in Washington (1996–1999) before skyrocketing to stardom. As a 4-time NBA Defensive Player of the Year, he remains the ultimate symbol of grit, lock-down paint presence, and pure unyielding determination.",
+                    img: "https://upload.wikimedia.org/wikipedia/commons/c/cd/Ben_Wallace_cropped.jpg",
+                    badge: "Big Ben"
                 }
             }
         };
 
-        // Master UI Switch state manager
         function setTeam(teamKey) {
-            const data = teamData[teamKey];
-            if (!data) return;
+            // Adjust Document Theme Mode
+            if(teamKey === 'mission') {
+                document.body.setAttribute('data-theme', 'mission');
+            } else {
+                document.body.removeAttribute('data-theme');
+            }
 
-            // 1. Shift the global dataset layout tag to update CSS variables dynamically
-            document.documentElement.setAttribute('data-theme', teamKey);
-
-            // 2. Clear out prior button focus states and assign active class to current pick
+            // Update Active Navigation Tab Class
             document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
-            document.getElementById(`btn-${teamKey}`).classList.add('active');
+            if(teamKey === 'wizards') document.getElementById('btn-wizards').classList.add('active');
+            if(teamKey === 'mission') document.getElementById('btn-mission').classList.add('active');
 
-            // 3. Inject textual data adjustments safely inside Header elements
+            const data = teamData[teamKey];
+            
+            // Text Header Elements Mutation
             document.getElementById('team-heading').textContent = data.name;
             document.getElementById('team-subheading').textContent = data.subheading;
             document.getElementById('team-logo-img').src = data.logo;
 
-            // 4. Update section headings and general text slots
-            document.getElementById('sec1-title').textContent = data.sec1Title || "Franchise Identity & Overview";
+            // Overview Section Remapping
+            document.getElementById('sec1-title').textContent = data.sec1Title;
             document.getElementById('overview-p1').textContent = data.overview1;
             document.getElementById('overview-p2').textContent = data.overview2;
+
+            // Fact Sheet Data Loop Insertion
+            document.getElementById('sec2-title').textContent = data.sec2Title;
+            document.getElementById('th-metric').textContent = data.thMetric;
+            document.getElementById('th-data').textContent = data.thData;
+            
+            const factBody = document.getElementById('fact-sheet-body');
+            factBody.innerHTML = '';
+            data.facts.forEach(fact => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td><strong>${fact[0]}</strong></td><td>${fact[1]}</td>`;
+                factBody.appendChild(row);
+            });
+
+            // Timeline Complex Loop Render
             document.getElementById('sec3-title').textContent = data.sec3Title;
-
-            // 5. Structure conditional handling for stats vs technical layout parameters
-            const condTable = document.getElementById('conditional-table-wrapper');
-            const condLeaders = document.getElementById('conditional-leaders-wrapper');
-
-            if (teamKey === 'mission') {
-                // Hide table matrices completely on our personal statement layout
-                condTable.classList.add('hidden-block');
-                condLeaders.classList.add('hidden-block');
-            } else {
-                // Restore interactive record data views for NBA teams
-                condTable.classList.remove('hidden-block');
-                condLeaders.classList.remove('hidden-block');
-                
-                document.getElementById('sec2-title').textContent = data.sec2Title;
-                document.getElementById('th-metric').textContent = data.thMetric;
-                document.getElementById('th-data').textContent = data.thData;
-
-                // Populate regular stats fact tables
-                const factBody = document.getElementById('fact-sheet-body');
-                factBody.innerHTML = '';
-                data.facts.forEach(row => {
-                    factBody.innerHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td></tr>`;
-                });
-
-                // Populate team historic leaders tables
-                const leadersBody = document.getElementById('leaders-table-body');
-                leadersBody.innerHTML = '';
-                data.leaders.forEach(row => {
-                    leadersBody.innerHTML += `<tr><td><strong>${row[0]}</strong></td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
-                });
-            }
-
-            // 6. Regenerate visual Timeline Items systematically
             const timelineBox = document.getElementById('timeline-box');
             timelineBox.innerHTML = '';
             data.timeline.forEach(item => {
-                timelineBox.innerHTML += `
-                    <div class="timeline-item">
-                        <div class="timeline-year">${item.year}</div>
-                        <p>${item.text}</p>
-                    </div>
-                `;
+                const itemDiv = document.createElement('div');
+                itemDiv.className = 'timeline-item';
+                itemDiv.innerHTML = `<div class="timeline-year">${item.year}</div><p>${item.text}</p>`;
+                timelineBox.appendChild(itemDiv);
             });
 
-            // 7. Re-populate Profile Focus Showcase components
+            // Franchise Leaders Data Rebuilding
+            const leadersBody = document.getElementById('leaders-table-body');
+            leadersBody.innerHTML = '';
+            data.leaders.forEach(leader => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td><strong>${leader[0]}</strong></td><td>${leader[1]}</td><td>${leader[2]}</td>`;
+                leadersBody.appendChild(row);
+            });
+
+            // Sidebar Highlight Hero Card Update
             document.getElementById('player-name').textContent = data.player.name;
             document.getElementById('player-title').textContent = data.player.title;
             document.getElementById('player-desc').textContent = data.player.desc;
