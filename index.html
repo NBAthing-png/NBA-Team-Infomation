@@ -22,7 +22,7 @@
             /* Toggle Specific Variables */
             --toggle-bg: rgba(255, 255, 255, 0.08);
             --toggle-indicator: #E31837;
-            --indicator-width: calc(50% - 6px);
+            --indicator-width: calc(33.333% - 6px);
             --left-offset: 4px;
         }
 
@@ -34,7 +34,18 @@
             --dark-surface: #020617;
             --neon-glow: 0 0 20px rgba(56, 189, 248, 0.35);
             --toggle-indicator: #38bdf8;
-            --left-offset: calc(50% + 2px);
+            --left-offset: calc(66.666% + 2px);
+        }
+
+        /* Los Angeles Clippers Theme Overrides */
+        [data-theme="clippers"] {
+            --primary-color: #C8102E;
+            --secondary-color: #1D428A;
+            --accent-silver: #BEC0C2;
+            --dark-surface: #111827;
+            --neon-glow: 0 0 20px rgba(29, 66, 138, 0.35);
+            --toggle-indicator: #1D428A;
+            --left-offset: calc(33.333% + 3px);
         }
 
         /* Smooth Reset */
@@ -107,7 +118,7 @@
             transition: color 0.4s ease;
         }
 
-        /* 2-way Segmented Control */
+        /* 3-way Segmented Control */
         .toggle-wrapper {
             margin-top: 25px;
             position: relative;
@@ -117,7 +128,7 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 4px;
             border-radius: 50px;
-            width: 400px;
+            width: 520px; /* Increased width to perfectly scale 3 tabs */
             height: 50px;
             z-index: 5;
             box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
@@ -160,7 +171,7 @@
             color: #ffffff;
         }
 
-        [data-theme="mission"] .toggle-btn.active {
+        [data-theme="mission"] #btn-mission.active {
             color: #0f172a;
         }
 
@@ -332,6 +343,10 @@
         [data-theme="mission"] .timeline-item::after {
             box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(56, 189, 248, 0.15);
         }
+        
+        [data-theme="clippers"] .timeline-item::after {
+            box-shadow: 0 0 0 4px #ffffff, 0 0 0 6px rgba(29, 66, 138, 0.15);
+        }
 
         .timeline-year {
             font-weight: 800;
@@ -424,7 +439,7 @@
 
         .mvp-badge {
             display: block;
-            background: linear-gradient(135deg, var(--secondary-color) 0%, #b91c1c 100%);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, #1d428a 100%);
             color: white;
             padding: 14px;
             border-radius: 12px;
@@ -443,7 +458,7 @@
             box-shadow: 0 4px 15px rgba(56, 189, 248, 0.4);
         }
 
-        /* Conditional Content Hiding Engine */
+        /* Dynamic visibility configs */
         .dynamic-visibility {
             display: block;
         }
@@ -487,8 +502,10 @@
                 <h1 id="team-heading">Washington Wizards</h1>
                 <p id="team-subheading">facts and stats</p>
                 
+                <!-- Expanded 3-Way Selector Toggle -->
                 <div class="toggle-wrapper">
                     <button type="button" id="btn-wizards" class="toggle-btn active" onclick="setTeam('wizards')">Wizards</button>
+                    <button type="button" id="btn-clippers" class="toggle-btn" onclick="setTeam('clippers')">Clippers</button>
                     <button type="button" id="btn-mission" class="toggle-btn" onclick="setTeam('mission')">Why This Site?</button>
                 </div>
             </div>
@@ -625,11 +642,11 @@
                 thMetric: "Franchise Metric",
                 thData: "Historical Record Data",
                 facts: [
-                    ["Inaugural Season", "1961 (as Chicago Packers)"],
-                    ["Home Arena", "Capital One Arena (Washington, D.C.)"],
-                    ["NBA Championships", "1 (1978)"],
-                    ["Conference Titles", "4 (1971, 1975, 1978, 1979)"],
-                    ["Division Titles", "8 (Last won in 2017)"]
+                    ["Inaugural Season", "1970 (as Buffalo Braves)"],
+                    ["Home Arena", "Intuit Dome (Inglewood, California)"],
+                    ["NBA Championships", "0"],
+                    ["Conference Titles", "0"],
+                    ["Division Titles", "2 (2013, 2014)"]
                 ],
                 sec3Title: "Historical Timelines & Eras",
                 timeline: [
@@ -649,6 +666,43 @@
                     desc: "A 5-time NBA All-Star, John Wall stands as the ultimate franchise cornerstone of modern D.C. basketball, dominating game tempos through record-setting assists and unrivaled end-to-end speed.",
                     img: "https://cdn.nba.com/teams/legacy/www.nba.com/wizards/sites/wizards/files/legacy/photos/wall_100908_14.jpg",
                     badge: "Most Valuable Player"
+                }
+            },
+            clippers: {
+                name: "Los Angeles Clippers",
+                subheading: "facts and stats",
+                logo: "https://upload.wikimedia.org/wikipedia/en/thumb/b/bb/Los_Angeles_Clippers_logo_2024.svg/1280px-Los_Angeles_Clippers_logo_2024.svg.png",
+                sec1Title: "Franchise Identity & Overview",
+                overview1: "The Los Angeles Clippers are an American professional basketball team based in Los Angeles. The Clippers compete in the National Basketball Association (NBA) as a member of the Pacific Division of the Western Conference. After decades of sharing an arena downtown, the franchise has established its own clear presence in a brand-new custom home venue.",
+                overview2: "The team was founded in 1970 as the Buffalo Braves, before relocating to San Diego in 1978 and renaming themselves the Clippers after the sailing ships that frequented San Diego Bay. In 1984, the team moved to Los Angeles. Long overshadowed by their cross-town rivals, the modern Clippers have evolved into perennially dangerous playoff contenders.",
+                sec2Title: "Quick Fact Sheet",
+                thMetric: "Franchise Metric",
+                thData: "Historical Record Data",
+                facts: [
+                    ["Inaugural Season", "1970 (as Buffalo Braves)"],
+                    ["Home Arena", "Intuit Dome (Inglewood, CA)"],
+                    ["NBA Championships", "0"],
+                    ["Conference Titles", "0"],
+                    ["Division Titles", "2 (2013, 2014)"]
+                ],
+                sec3Title: "Historical Timelines & Eras",
+                timeline: [
+                    { year: "2011-2017 — The Lob City Era", text: "Acquiring Chris Paul alongside dynamic dunkers Blake Griffin and DeAndre Jordan turned the Clippers into the most exciting fast-break show in sports, locking in consecutive 50+ win seasons." },
+                    { year: "2019-Present — The Star-Power Shift", text: "Signing dynamic two-way wings like Kawhi Leonard completely redefined the franchise identity, building a tough defensive infrastructure designed for ultimate post-season success." },
+                    { year: "2024 — Entering The Intuit Dome", text: "The Clippers officially moved out of Crypto.com Arena and opened the doors to their own ultra-modern technological marvel, the Intuit Dome, creating a true solo home court advantage." }
+                ],
+                leaders: [
+                    ["Total Points", "Randy Smith", "12,734 PTS"],
+                    ["Total Assists", "Chris Paul", "4,024 AST"],
+                    ["Total Rebounds", "DeAndre Jordan", "7,988 REB"],
+                    ["Total Blocks", "DeAndre Jordan", "1,277 BLK"]
+                ],
+                player: {
+                    name: "Chris Paul",
+                    title: "Point Guard | Point God",
+                    desc: "Chris Paul was the engine behind the legendary 'Lob City' era. Across 6 memorable seasons, he completely transformed the culture of the franchise, turning a lottery team into global title contenders with immaculate court vision and intense perimeter defense.",
+                    img: "https://images.saymedia-content.com/.image/ar_1:1%2Cc_fill%2Ccs_srgb%2Cfl_progressive%2Cq_auto:good%2Cw_1200/MjAzMTk1ODU2NzA2MDMxODc4/why-chris-paul-belongs-in-the-top-30-players-of-all-time.jpg",
+                    badge: "All-Star Leader"
                 }
             },
             mission: {
@@ -692,6 +746,8 @@
             // Adjust Document Theme Mode
             if(teamKey === 'mission') {
                 document.body.setAttribute('data-theme', 'mission');
+            } else if(teamKey === 'clippers') {
+                document.body.setAttribute('data-theme', 'clippers');
             } else {
                 document.body.removeAttribute('data-theme');
             }
@@ -699,6 +755,7 @@
             // Update Active Navigation Tab Class
             document.querySelectorAll('.toggle-btn').forEach(btn => btn.classList.remove('active'));
             if(teamKey === 'wizards') document.getElementById('btn-wizards').classList.add('active');
+            if(teamKey === 'clippers') document.getElementById('btn-clippers').classList.add('active');
             if(teamKey === 'mission') document.getElementById('btn-mission').classList.add('active');
 
             const data = teamData[teamKey];
